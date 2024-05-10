@@ -267,7 +267,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: For a specific collection (by its Id), returns an item's data and proof cell
+      summary: For a specific collection, returns an item's data and the proof cell
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex)
       operationId: findCsbtItem
       parameters:
@@ -305,7 +305,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: For a specific collection (by its Id), returns list of items in a slice given its offset and count
+      summary: For a specific collection, returns a list of items in a slice given its offset and count
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#2-itemsoffsetoffsetcountcount)
       operationId: findCsbtItems
       parameters:
@@ -325,14 +325,14 @@ paths:
           schema:
             type: integer
             default: 0
-        - name: Count
+        - name: count
           in: query
           description: Number of items to return
           required: true
           explode: true
           schema:
-            type: string
-            default: EQCuSUgDsTjTIl-fiVYy8PppqpIgJX3Xn8Cjzjb8YMW-YatV
+            type: number
+            default: 26
       responses:
         '200':
           description: Successful operation
@@ -350,7 +350,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: Returns the state of a compressed SBT collection (given its Id)
+      summary: Returns the state of a compressed SBT collection
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#3-state)
       operationId: findCsbtCollectionState
       parameters:
@@ -361,7 +361,7 @@ paths:
           explode: true
           schema:
             type: string
-            default: EQCuSUgDsTjTIl-fiVYy8PppqpIgJX3Xn8Cjzjb8YMW-YatV
+            default: EQAyaHk64ZntohYtixic2oOt2jyRV_GpJ0Qn-yl4Kh9vJz_i
       responses:
         '200':
           description: Successful operation
