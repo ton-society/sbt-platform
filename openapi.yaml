@@ -1,0 +1,704 @@
+openapi: 3.0.3
+info:
+  title: Ton Society API
+  description: Public API specification
+  version: 1.0.0
+servers:
+  - url: https://society.ton.org/v1
+tags:
+  - name: Infra
+    description: Infastructure endpoints
+  - name: Users
+    description: Handle users related data
+  - name: Collections
+    description: Handle data related to the collections of SBTs stroed in the internal database
+  - name: User Activities
+    description: Handle data related to the user activities
+paths:
+  /status:
+    get:
+      tags:
+        - Infra
+      summary: API status
+      description: API status healthcheck
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Internal server error
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Finds users
+      description: Finds top users in the order of the number of awards received, `is_name_changed` field, `is_telegram_verified` field, the date awards has been received, and, finally, user Id. Only publicly available data is returned.
+      operationId: findUsers
+      parameters:
+        - name: _start
+          in: query
+          description: Paginated list start index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 0
+        - name: _end
+          in: query
+          description: Paginated list end index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 10
+        - name: collection_id
+          in: query
+          description: Filters users who own an SBT in the given collection.
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessPublicUsers'
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+  /users/{username}:
+    get:
+      tags:
+        - Users
+      summary: Finds a user by username
+      description: Simply returns publicly available user data
+      operationId: findUserByUsername
+      parameters:
+        - name: username
+          in: path
+          description: User's username
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: 41d888dc37
+        - name: collection_id
+          in: query
+          description: Returns user data only if this user owns an SBT in the collection with the provided id.
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessPublicUser'
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+  /users/{username}/rank:
+    get:
+      tags:
+        - Users
+      summary: Finds a rank of the user
+      description: Returns user's rank in the contributors list given user's username
+      operationId: findUserRankByUsername
+      parameters:
+        - name: username
+          in: path
+          description: User's username
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: 41d888dc37
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    enum:
+                      - success
+                      - error
+                      - fail
+                  data:
+                    type: integer
+                    format: int64
+                    example: 112
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+  /users/{username}/sbts:
+    get:
+      tags:
+        - Users
+      summary: Finds SBTs owned by a user
+      description: Returns a paginated list of SBTs owned by a user given user's username
+      operationId: findUserNftsByUsername
+      parameters:
+        - name: username
+          in: path
+          description: User's username
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: 41d888dc37
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessSbts'
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+  /collections/{id}:
+    get:
+      tags:
+        - Collections
+      summary: Finds an SBT collection
+      description: Returns an SBT collection data given its id in the database
+      operationId: findCollectionById
+      parameters:
+        - name: id
+          in: path
+          description: SBT collection id
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 123
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessCollection'
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+  /collections/{id}/participants:
+    get:
+      tags:
+        - Collections
+      summary: Finds activity participants
+      description: Returns a list of users partcipated in the activity related to the SBT collection with the given id
+      operationId: findCollectionParticipantsById
+      parameters:
+        - name: id
+          in: path
+          description: SBT collection id
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 123
+        - name: limit
+          in: query
+          description: The maximum number of participants to return
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 3
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessCollectionParticipants'
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error 
+  /last-activities:
+    get:
+      tags:
+        - User Activities
+      summary: Finds last activities made by user, i.e., last recevied awards
+      description: An endpoint that compounds data from Users, SBT items, and activties models. The last activities are most recent rewards (or SBTs) received by users.
+      operationId: findLastActivities
+      parameters:
+        - name: _start
+          in: query
+          description: Paginated list start index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 0
+        - name: _end
+          in: query
+          description: Paginated list end index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 10
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessLastActivities'
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+  /csbts/collections/{path}/v1/items/{index}:
+    get:
+      tags:
+        - Compressed SBTs
+      summary: For a specific collection (by its Id), returns an item's data and proof cell
+      description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex)
+      operationId: findCsbtItem
+      parameters:
+        - name: path
+          in: path
+          description: SBT collection friendly address or its internal id
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: EQCuSUgDsTjTIl-fiVYy8PppqpIgJX3Xn8Cjzjb8YMW-YatV
+        - name: index
+          in: path
+          description: Index of the requested item
+          required: true
+          explode: true
+          schema:
+            type: integer
+            default: 2
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsbtItemByIndex'
+        '400':
+          description: Invalid query/path param provided
+        '404':
+          description: Requested resource not found
+        '500':
+          description: Internal server error
+
+  /csbts/collections/{path}/v1/items:
+    get:
+      tags:
+        - Compressed SBTs
+      summary: For a specific collection (by its Id), returns list of items in a slice given its offset and count
+      description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#2-itemsoffsetoffsetcountcount)
+      operationId: findCsbtItems
+      parameters:
+        - name: path
+          in: path
+          description: SBT collection friendly address or its internal id
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: EQCuSUgDsTjTIl-fiVYy8PppqpIgJX3Xn8Cjzjb8YMW-YatV
+        - name: offset
+          in: query
+          description: Starting index of the returned slice of items
+          required: true
+          explode: true
+          schema:
+            type: integer
+            default: 0
+        - name: Count
+          in: query
+          description: Number of items to return
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: EQCuSUgDsTjTIl-fiVYy8PppqpIgJX3Xn8Cjzjb8YMW-YatV
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsbtItems'
+        '400':
+          description: Invalid query/path param provided
+        '404':
+          description: Requested resource not found
+        '500':
+          description: Internal server error
+  /csbts/collections/{path}/v1/state:
+    get:
+      tags:
+        - Compressed SBTs
+      summary: Returns the state of a compressed SBT collection (given its Id)
+      description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#3-state)
+      operationId: findCsbtCollectionState
+      parameters:
+        - name: path
+          in: path
+          description: SBT collection friendly address or its internal id
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: EQCuSUgDsTjTIl-fiVYy8PppqpIgJX3Xn8Cjzjb8YMW-YatV
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsbtCollectionState'
+        '400':
+          description: Invalid query/path param provided
+        '404':
+          description: Requested resource not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    PublicUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: Priscilla Miller
+        username:
+          type: string
+          example: 238497403a24c
+        bio:
+          type: string
+          example: 23 y.o. designer from San-Francisco
+        awards_count:
+          type: integer
+          example: 166
+        last_award_at:
+          type: integer
+          example: 1711013388
+        created_at:
+          type: integer
+          example: 1711013388
+        updated_at:
+          type: integer
+          example: 1711013388
+        avatar_url:
+          type: string
+          format: url
+          example: https://storage.googleapis.com/ton-strapi/Avatar_1321317640_92f4adfc3f/Avatar_1321317640_92f4adfc3f.png
+    SuccessPublicUser:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/PublicUser'
+    SuccessPublicUsers:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            count:
+              type: integer
+              format: int64
+              example: 324
+            users:
+              type: array
+              items:
+                $ref: '#/components/schemas/PublicUser'
+    Sbt:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        sbt_collections_id:
+          type: integer
+          format: int64
+          example: 21
+        content_uri:
+          type: string
+        name:
+          type: string
+          example: TON Bounty #305
+        description:
+          type: string
+          example: Reward for valuable TON Ecosystem contributions
+        image:
+          type: string
+          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+        content_json:
+          type: object
+        created_at:
+          type: integer
+          format: int64
+          example: 1711095609
+        updated_at:
+          type: integer
+          format: int64
+          example: 1711095609
+        sbt_collection_address:
+          type: string
+          example: EQBAJCGblueX9Nwr84TmrcLmIoPbeunnujBoziT3MtJuaJ0J
+    SuccessSbts:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            count:
+              type: integer
+              format: int64
+              example: 18
+            sbts:
+              type: array
+              items:
+                $ref: '#/components/schemas/Sbt'
+
+    Collection:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 128
+        raw_address:
+          type: string
+          example: 0:4024219B96E797F4DC2BF384E6ADC2E62283DB7AE9E7BA3068CE24F732D26E68
+        friendly_address:
+          type: string
+          example: EQBAJCGblueX9Nwr84TmrcLmIoPbeunnujBoziT3MtJuaJ0J
+        next_item_index:
+          type: integer
+          format: int64
+          example: 151
+        content_uri:
+          type: string
+          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/collection.json
+        raw_owner_address:
+          type: string
+          example: 0:C290189A787E15FBA30142A3250B70F3019F8C8553E9A5E1BAF65723AA3C6C47
+        friendly_owner_address:
+          type: string
+          example: UQDCkBiaeH4V-6MBQqMlC3DzAZ-MhVPppeG69lcjqjxsR13R
+        name:
+          type: string
+          example: TON Bounties Contributors
+        description:
+          type: string
+          example: TON Bounties program is an open community initiative that is fast-forwarding support for valuable contributions enhancing The Open Network Ecosystem
+        image:
+          type: string
+          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+        content_json:
+          type: object
+        created_at:
+          type: integer
+          format: int64
+          example: 1711095609
+        updated_at:
+          type: integer
+          format: int64
+          example: 1711095609
+        version:
+          type: integer
+          format: int64
+          example: 1
+    SuccessCollection:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            count:
+              type: integer
+              format: int64
+              example: 324
+            users:
+              type: array
+              items:
+                $ref: '#/components/schemas/Collection'
+    SuccessCollectionParticipants:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            collection:
+              $ref: '#/components/schemas/Collection'
+            count:
+              type: integer
+              format: int64
+              example: 69
+            participants:
+              type: array
+              items:
+                $ref: '#/components/schemas/PublicUser'
+    SuccessLastActivities:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            count:
+              type: integer
+              format: int64
+              example: 68075
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  activity:
+                    type: object
+                    description: Activity entity
+                  award:
+                    type: object
+                    properties:
+                      created_at:
+                        type: integer
+                        format: int64
+                      description:
+                        type: string
+                      image:
+                        type: string
+                  user:
+                    $ref: '#/components/schemas/PublicUser'
+  
+    CsbtItem:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            owner:
+              description: Item's owner
+              type: string
+              example: 0:000000000000000000000000000000000000000000000000000000000000000
+            individual_content:
+              description: Item's individual content
+              type: string
+              example: te6cckEBAQEACAAADDAuanNvbuTiyMU=
+            name:
+              type: string
+              example: TON Bounties Contributors
+            description:
+              type: string
+              example: TON Bounties program is an open community initiative that is fast-forwarding support for valuable contributions enhancing The Open Network Ecosystem
+            image:
+              type: string
+              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+        index:
+          type: string
+          description: Item's index
+          example: 0
+          
+    CsbtItemByIndex:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/CsbtItem'
+        proof_cell:
+          type: string
+          description: Proof cell that allows one claiming an item on the blockchain
+          example: te6cckEBBgEAeQACAAEDAUOAFa1KqA2Oswxbo4Rgh/q6NEaPLuK9o3fo1TFGn+MySjqQAgAMMi5qc29uAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQBQF4S3GMDJY/HoZd6TCREIOnCaYlF23hNzJaSsfMd1S7nBQAA8muEeQ==
+  
+    CsbtItems:
+      type: object
+      properties:
+        items:
+          type: array
+          description: if no items exisits in the slice, null values should be returned instead (see the standrad for details)
+          items:
+            $ref: '#/components/schemas/CsbtItem'
+        last_index:
+          type: string
+          description: Index of the very last item in the collection. This is a part of the collection state.
+          example: 37
+
+    CsbtCollectionState:
+      type: object
+      properties:
+        last_index:
+          type: string
+          description: Index of the very last item in the collection
+          example: 37
+        address:
+          type: string
+          description: The address of the collection smart contract that this API augments
+          example: 0:000000000000000000000000000000000000000000000000000000000000000
+  
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
