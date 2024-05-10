@@ -7,16 +7,18 @@
 ## How it works
 1. Projects can publish a variety of activities, organized on their side, in the [TON Society Platform catalogue](https://society.ton.org/). Users can browse the catalog to find activities and participate in the relevant projects:
 
-![Activity catalog](https://github.com/ton-developers/ton-society/blob/779bea73fe2b383212095220906074a8ed5e4a12/images/345.png)
+![345](https://github.com/ton-society/sbt-platform/assets/314577/7e99a9ad-bfb6-4741-83e0-fd2b5fab5bf7)
 
 2. Upon activity completion, projects share with users a **special link** that allows them to receive an **SBT reward**. The SBT appears in the user's wallet within 24 hours.
 
-https://github.com/ton-developers/ton-society/assets/314577/d92fc3b7-7858-405a-9ca8-1819630eae6f
+
+https://github.com/ton-society/sbt-platform/assets/314577/34f3353a-12df-4eb2-bcdc-c1707437fe5a
 
 
 3. The received awards are displayed in the user's personal profile. Moreover, users can track the progress of other participants in the [leaderboard](https://society.ton.org/contributors). This what **encourages users to compete and participate in more activities.**
    
-![Contributors](https://github.com/ton-developers/ton-society/blob/07fd3092a3d28f4eff1ce3ffddcd8032cf944b0e/images/Profile%2Bleaderboard.png)
+![Profile+leaderboard](https://github.com/ton-society/sbt-platform/assets/314577/44a40dfb-4146-4eff-b032-5fe6cb40b025)
+
 
 ## TON Society use Compressed SBTs (cSBT)
 Instead of standard SBTs, TON Society uses compressed ones. This approach allows for large-scale minting of SBTs without cost. Here's how compressed SBTs (cSBTs) work:
