@@ -23,7 +23,7 @@ Instead of standard SBTs, TON Society uses compressed ones. This approach allows
 
 1. Information about cSBT collections and minted items is stored on the TON Society's backend service.
 2. Minting proofs for a given collection are sent on-chain every 24 hours in a single transaction — this leads to significant savings on fees.
-3. TON Society's minting system is fully complaint with [Compressed SBT Standard](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex). All ecosystem players willing to display these cSBTs should support it using [open APIs](https://ton-developers.github.io/ton-society/#/Compressed%20SBTs) built according to the Standard.
+3. TON Society's minting system is fully complaint with [Compressed SBT Standard](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex). All ecosystem players willing to display these cSBTs should support it using [open APIs](https://ton-society.github.io/sbt-platform/#/Compressed%20SBTs) built according to the Standard.
 4. Currently, cSBT items and collections minted through TON Society are supported and displayed by Getgems, TON Space, Tonkeeper, Tonviewer, and the TON API.
 
 If activity owners decide to reward their participants using classic SBT collections, they need to implement minting on their own. Afterward, the activity and its minted collection can be registered in the TON Society catalog to increase visibility and attract more interest.
@@ -55,8 +55,8 @@ To get a personalized link:
 ### 3. Access cSBT and user data to display on a project side
 Use TON Society APIs to display minted cSBTs and user information in your project.
 
-**[Users and Collections](https://ton-developers.github.io/ton-society/#/Users)**<br />
+**[Users and Collections](https://ton-society.github.io/sbt-platform/#/Users)**<br />
 Provides access to publicly available information on society.ton.org regarding registered users and the SBT/cSBT collections associated with them.
 
-**[cSBT data](https://ton-developers.github.io/ton-society/#/Compressed%20SBTs)**<br />
+**[cSBT data](https://ton-society.github.io/sbt-platform/#/Compressed%20SBTs)**<br />
 Provides access to cSBT collections minted via TON Society in your project. This information complies with the [Compressed SBT Standard](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex).
