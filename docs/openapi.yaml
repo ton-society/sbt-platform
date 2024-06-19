@@ -305,7 +305,7 @@ paths:
       tags:
         - Activities
       summary: Create a new activity
-      description: An endpoint that allows to create a new activity () of the "Events" activity group. See [ton-society events page](https://society.ton.org/activities/events). Newly created activity is not posted on the website right away - it first needs to go through moderation first. 
+      description: An endpoint that allows to create a new activity of the "Events" activity group. See [ton-society events page](https://society.ton.org/activities/events). Newly created activity is not posted on the website right away - it first needs to go through moderation first. 
       operationId: createEvent
       requestBody:
         required: true
@@ -313,7 +313,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [title, subtitle, description, society_hub_id]
+              required: [title, subtitle, description, hub_id]
               properties:
                 title:
                   type: string
@@ -327,7 +327,7 @@ paths:
                   type: string
                   description: The activity description
                   example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥\nIt’s going to be hot and exciting!"
-                society_hub_id:
+                hub_id:
                   type: integer
                   description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://society.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
                   example: 1
@@ -343,6 +343,19 @@ paths:
                   type: string
                   description: The end date of the activity in the appropriate format
                   example: "2024-06-02"
+                cta_button:
+                  type: object
+                  required: [label, link]
+                  properties:
+                    label:
+                      type: string
+                      description: Label shown on the CTA button
+                      example: "Event details"
+                    link:
+                      type: string
+                      description: External link opened when the CTA button is clicked
+                      example: https://lu.ma/3mx6a7l7
+                    
       responses:
         '200':
           description: Successful operation
@@ -356,6 +369,85 @@ paths:
           description: Internal server error
       security:
         - api_key: []
+        - partner_name: []
+  
+  /activities/{activity_id}:
+    patch:
+      tags:
+        - Activities
+      summary: Update an existing activity (earlier created by the same partner id)
+      description: An endpoint that allows to update an activity of the "Events" activity group. See [ton-society events page](https://society.ton.org/activities/events).
+      operationId: updateEvent
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity to be patched
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1101
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The activity title
+                  example: "Open League Summer: Taipei Bootcamp"
+                subtitle:
+                  type: string
+                  description: The activity subtitle
+                  example: "$2,000,000 in prizes and 13 IRL Bootcamps!"
+                description:
+                  type: string
+                  description: The activity description
+                  example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥\nIt’s going to be hot and exciting!"
+                hub_id:
+                  type: integer
+                  description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://society.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
+                  example: 1
+                additional_info:
+                  type: string
+                  description: The activity additional information
+                  example: "Taipei, Taiwan"
+                start_date:
+                  type: string
+                  description: The start date of the activity in the appropriate format. To nullify pass "null"
+                  example: "2024-05-31"
+                end_date:
+                  type: string
+                  description: The end date of the activity in the appropriate format. To nullify pass "null"
+                  example: "2024-06-02"
+                cta_button:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                      description: Label shown on the CTA button
+                      example: "Event details"
+                    link:
+                      type: string
+                      description: External link opened when the CTA button is clicked
+                      example: https://lu.ma/3mx6a7l7
+                    
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccess'
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+      security:
+        - api_key: []
+        - partner_name: []
           
   /csbts/collections/{address}/items/{index}:
     get:
@@ -779,6 +871,19 @@ components:
               type: string
               description: Link that allows activity participants to claim rewards ()in the form of SBTs). Rewards are to be minted later
               example: https://society.ton.org/welcome/07a4a84cd28adb3324345c68a7a0884b:e4c9e668b471ea77fa3a8435ea693595
+      
+    EmptySuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
   
     CsbtItem:
       type: object
@@ -847,4 +952,8 @@ components:
     api_key:
       type: apiKey
       name: x-api-key
+      in: header
+    partner_name:
+      type: apiKey
+      name: x-partner-id
       in: header
