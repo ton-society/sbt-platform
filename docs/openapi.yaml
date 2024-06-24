@@ -433,7 +433,6 @@ paths:
                       type: string
                       description: External link opened when the CTA button is clicked
                       example: https://lu.ma/3mx6a7l7
-                    
       responses:
         '200':
           description: Successful operation
@@ -449,7 +448,49 @@ paths:
         - api_key: []
         - partner_name: []
           
-  /csbts/collections/{address}/items/{index}:
+  /activities/{activity_id}/participants:
+    post:
+      tags:
+        - Activities
+      summary: Send list of even participants (wallet addresses)
+      description: Send wallet addresses beloning to the participants of an event defined by the given activity id
+      operationId: createParticipants
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity to be patched
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1101
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [participants]
+              properties:
+                participants:
+                  type: array
+                  items:
+                    type: string
+                  description: The list of wallets (belong to participants)
+                  example: ["EQDppPaiVVK5g-3O08RRuMSCyGf7fZ0kolzH19e8-bX-JxEG","EQAFO0JRD2-0tDiPzeQSXn5VuEkbN4cF1tRa8z-DJqg5Ls7V","EQAYgieGbaUNYunuRBAV7yZJj8ciyAKZ5oJIb1bhzyjNTPq6"]
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid query/path param provided
+        '500':
+          description: Internal server error
+      security:
+        - api_key: []
+        - partner_name: []
+  
+          
+  /csbts/collections/{address}/v1/items/{index}:
     get:
       tags:
         - Compressed SBTs
@@ -485,7 +526,7 @@ paths:
         '500':
           description: Internal server error
 
-  /csbts/collections/{address}/items:
+  /csbts/collections/{address}/v1/items:
     get:
       tags:
         - Compressed SBTs
@@ -528,7 +569,8 @@ paths:
           description: Invalid query/path param provided
         '500':
           description: Internal server error
-  /csbts/collections/{address}/state:
+
+  /csbts/collections/{address}/v1/state:
     get:
       tags:
         - Compressed SBTs
