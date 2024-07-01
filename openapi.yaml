@@ -369,7 +369,7 @@ paths:
           description: Internal server error
       security:
         - api_key: []
-        - partner_name: []
+        - partner_id: []
   
   /activities/{activity_id}:
     patch:
@@ -446,7 +446,7 @@ paths:
           description: Internal server error
       security:
         - api_key: []
-        - partner_name: []
+        - partner_id: []
           
   /activities/{activity_id}/participants:
     post:
@@ -487,9 +487,45 @@ paths:
           description: Internal server error
       security:
         - api_key: []
-        - partner_name: []
+        - partner_id: []
   
-          
+  /activities/{activity_id}/rewards:
+    post:
+      tags:
+        - Activities
+      summary: Generates a unique reward link
+      description: Returns a unique reward link for users to receive rewards through particpation in activities. The link is generated based on activity ID, user's unique identificator (wallet friendly address or Telegram user id).
+      operationId: createRewardLink
+      parameters:
+        - name: activity_id
+          in: path
+          description: Activity id
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 129
+      security:
+        - api_key: []
+        - partner_id: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRewardLinkBody'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: activity not found, invalid wallet friendly address
+        '500':
+          description: Internal server error
+
   /csbts/collections/{address}/v1/items/{index}:
     get:
       tags:
@@ -990,12 +1026,55 @@ components:
           description: The address of the collection smart contract that this API augments
           example: 0:000000000000000000000000000000000000000000000000000000000000000
   
+
+    CreateRewardLinkBody:
+      type: object
+      properties:
+        wallet_address:
+          type: string
+          description: The wallet address (in the friendly format), to which a reward is to be issued. Can be left empty if telegram_user_id is provided.
+          example: EQDxnrrz-0kgdjehShvisBy2sX7ATVFgoiFKStnD7D8qihVv
+        telegram_user_id:
+          type: integer
+          format: int64
+          description: Telegram id associated with an account, to which a reward is to be issued. Can be left empty if wallet_address is provided.
+          example: 439739
+        attributes:
+          type: array
+          description: Additional SBT attributes to be included in item metadata.
+          items:
+            type: object
+            properties:
+              trait_type:
+                type: string
+                example: 'Organizer'
+              value:
+                type: string
+                example: 'TON Society Asia'
+
+    SuccessRewardLink:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            reward_link:
+              type: string
+              example: https://society.ton.org/welcome/52528543-df85-4529-afbd-07ac7c48187d
+
   securitySchemes:
     api_key:
       type: apiKey
       name: x-api-key
       in: header
-    partner_name:
+    partner_id:
       type: apiKey
       name: x-partner-id
       in: header
