@@ -945,10 +945,6 @@ components:
               type: string
               description: Unique society.ton.org url of the newly created activity (the value might change after moderation)
               example: https://society.ton.org/open-league-summer-taipei-bootcamp
-            activity_reward_url:
-              type: string
-              description: Link that allows activity participants to claim rewards ()in the form of SBTs). Rewards are to be minted later
-              example: https://society.ton.org/welcome/07a4a84cd28adb3324345c68a7a0884b:e4c9e668b471ea77fa3a8435ea693595
       
     EmptySuccess:
       type: object
