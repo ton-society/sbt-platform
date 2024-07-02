@@ -65,6 +65,8 @@ paths:
                 $ref: '#/components/schemas/SuccessPublicUsers'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
   /users/{username}:
@@ -98,6 +100,8 @@ paths:
                 $ref: '#/components/schemas/SuccessPublicUser'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
   /users/{username}/rank:
@@ -137,6 +141,8 @@ paths:
                     example: 112
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
   /users/{username}/sbts:
@@ -164,6 +170,8 @@ paths:
                 $ref: '#/components/schemas/SuccessSbts'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
   /collections/{id}:
@@ -191,6 +199,8 @@ paths:
                 $ref: '#/components/schemas/SuccessCollection'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
   /collections/{id}/participants:
@@ -226,6 +236,8 @@ paths:
                 $ref: '#/components/schemas/SuccessCollectionParticipants'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error 
   /last-activities:
@@ -261,6 +273,8 @@ paths:
                 $ref: '#/components/schemas/SuccessLastActivities'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
   
@@ -297,6 +311,8 @@ paths:
                 $ref: '#/components/schemas/SuccessHubs'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
        
@@ -365,6 +381,8 @@ paths:
                 $ref: '#/components/schemas/SuccessEventCreation'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
       security:
@@ -442,6 +460,8 @@ paths:
                 $ref: '#/components/schemas/EmptySuccess'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
       security:
@@ -483,6 +503,8 @@ paths:
           description: Successful operation
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
       security:
@@ -522,7 +544,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/SuccessRewardLink'
         '400':
-          description: activity not found, invalid wallet friendly address
+          description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
 
@@ -559,6 +583,8 @@ paths:
                 $ref: '#/components/schemas/CsbtItemByIndex'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
 
@@ -603,6 +629,8 @@ paths:
                 $ref: '#/components/schemas/CsbtItems'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
 
@@ -631,6 +659,8 @@ paths:
                 $ref: '#/components/schemas/CsbtCollectionState'
         '400':
           description: Invalid query/path param provided
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
 
