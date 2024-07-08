@@ -315,7 +315,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-       
+
   /activities:
     post:
       tags:
@@ -536,6 +536,47 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateRewardLinkBody'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path/body param provided
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+
+  /activities/{activity_id}/rewards/{participant_id}:
+    get:
+      tags:
+        - Activities
+      summary: Fetch a unique reward link for activity particpants
+      description: Returns a unique reward link using participant's wallet friendly address or Telegram user id. Activity participants can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
+      operationId: findRewardLink
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity, for wich the participant was rewarded
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 14
+        - name: participant_id
+          in: path
+          description: Unique identifier of the activity participant, either wallet address (friendly format) or Telegram user Id
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: 1144289
+      security:
+        - x-api-key: []
+        - x-partner-id: []
       responses:
         '200':
           description: Successful operation
