@@ -467,50 +467,7 @@ paths:
       security:
         - api_key: []
         - partner_id: []
-          
-  /activities/{activity_id}/participants:
-    post:
-      tags:
-        - Activities
-      summary: Send list of even participants (wallet addresses)
-      description: Send wallet addresses beloning to the participants of an event defined by the given activity id
-      operationId: createParticipants
-      parameters:
-        - name: activity_id
-          in: path
-          description: Id of the activity to be patched
-          required: true
-          explode: true
-          schema:
-            type: number
-            default: 1101
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: [participants]
-              properties:
-                participants:
-                  type: array
-                  items:
-                    type: string
-                  description: The list of wallets (belong to participants)
-                  example: ["EQDppPaiVVK5g-3O08RRuMSCyGf7fZ0kolzH19e8-bX-JxEG","EQAFO0JRD2-0tDiPzeQSXn5VuEkbN4cF1tRa8z-DJqg5Ls7V","EQAYgieGbaUNYunuRBAV7yZJj8ciyAKZ5oJIb1bhzyjNTPq6"]
-      responses:
-        '200':
-          description: Successful operation
-        '400':
-          description: Invalid query/path/body param provided
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
-      security:
-        - api_key: []
-        - partner_id: []
-  
+
   /activities/{activity_id}/rewards:
     post:
       tags:
