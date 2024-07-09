@@ -161,6 +161,22 @@ paths:
           schema:
             type: string
             default: 41d888dc37
+        - name: _start
+          in: query
+          description: Paginated list start index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 0
+        - name: _end
+          in: query
+          description: Paginated list end index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 10
       responses:
         '200':
           description: Successful operation
