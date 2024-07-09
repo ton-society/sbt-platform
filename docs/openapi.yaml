@@ -548,8 +548,8 @@ paths:
             type: string
             default: 1144289
       security:
-        - x-api-key: []
-        - x-partner-id: []
+        - api_key: []
+        - partner_id: []
       responses:
         '200':
           description: Successful operation
