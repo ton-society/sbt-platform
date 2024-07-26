@@ -33,7 +33,7 @@ If activity owners decide to reward their participants using classic SBT collect
 ## Steps for projects to join
 
 ### 1. Register an activity
-Projects can apply to add relavant activities to the [Activity Catalog](https://society.ton.org/activities) by using [this form](https://docs.google.com/forms/d/e/1FAIpQLSdLGBSLahzJ9snoWUwpq7AkNaWrXBvAOk9jfW53D4uh_bDxow/viewform). We ask activity owners to provide infromation for both the page at TON Society and cSBT collection to be minted.
+Projects can apply to add relavant activities to the [Activity Catalog](https://society.ton.org/activities) by using [this form](https://eco.ton.org/en/application/make-sbt-campaign). We ask activity owners to provide infromation for both the page at TON Society and cSBT collection to be minted.
 
 We will review all applications and contact activity owners once the application is accepted.
 
