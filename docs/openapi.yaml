@@ -87,7 +87,7 @@ paths:
             default: 41d888dc37
         - name: collection_id
           in: query
-          description: Returns user data only if this user owns an SBT in the colleciton with the provided id.
+          description: Returns user data only if this user owns an SBT in the collection with the provided id.
           required: false
           schema:
             type: number
@@ -200,7 +200,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: SBT colleciton id
+          description: SBT collection id
           required: true
           explode: true
           schema:
@@ -229,7 +229,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: SBT colleciton id
+          description: SBT collection id
           required: true
           explode: true
           schema:
@@ -574,7 +574,7 @@ paths:
       parameters:
         - name: address
           in: path
-          description: SBT colleciton friendly address
+          description: SBT collection friendly address
           required: true
           explode: true
           schema:
@@ -612,7 +612,7 @@ paths:
       parameters:
         - name: address
           in: path
-          description: SBT colleciton friendly address
+          description: SBT collection friendly address
           required: true
           explode: true
           schema:
@@ -652,13 +652,13 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: Returns the state of a compressed SBT colleciton
+      summary: Returns the state of a compressed SBT collection
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#3-state)
       operationId: findCsbtCollectionState
       parameters:
         - name: address
           in: path
-          description: SBT colleciton friendly address
+          description: SBT collection friendly address
           required: true
           explode: true
           schema:
