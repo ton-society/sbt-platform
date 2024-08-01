@@ -37,10 +37,10 @@ Projects can apply to add relavant activities to the [Activity Catalog](https://
 
 We will review all applications and contact activity owners once the application is accepted.
 
-### 2. Receive a link to issue an cSBT
+### 2. Issuing an cSBT
 
 #### 2.1 Issuing SBT via unique link
-This is the preferred way for issuing the SBT. Once users complete all the actions on your side you could request a unique link from our API and just lead user to this link for receiving an SBT:
+This is the preferred way for issuing the cSBT. Once users complete all the actions on your side you could request a unique link from our API and just lead user to this link for receiving a cSBT:
 
 1. After the activity aproval, contact us to get corresponding ```activity_id```, ```partner_id``` and ```api_key```.
 2. On your side, request users to [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, [simply use](https://www.tapps.center/docs/packages/tma-js-init-data/user) ```window.Telegram.WebApp.initDataUnsafe.user.id```.
