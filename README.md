@@ -47,7 +47,7 @@ This is the preferred way for issuing the cSBT. Once users complete all the acti
 3. Once users complete all the actions on your side, make a [```POST``` request](https://ton-society.github.io/sbt-platform/#/Activities/createRewardLink), passing your ```activity_id```, ```partner_id```, ```api_key``` and one of user identifiers: ```telegram_user_id``` or ```wallet_address```. The response will contain the link.
 4. Share this link with the user.
 
-#### 2.1 Gathering wallets manually
+#### 2.2 Gathering wallets manually
 If you won't be able to implement technical integrations and use our API, you could gather wallet addresses manually and share it with us for manual minting.
 
 ### 3. Access cSBT and user data to display on a project side
