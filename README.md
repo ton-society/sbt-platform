@@ -38,21 +38,17 @@ Projects can apply to add relavant activities to the [Activity Catalog](https://
 We will review all applications and contact activity owners once the application is accepted.
 
 ### 2. Receive a link to issue an cSBT
-There are two types of links that can be used to issue a cSBT reward. We recommend using a personalized link whenever possible to prevent unauthorized cSBT issuance.
 
-#### 2.1 Anonymous link
-Activity owners will receive this link from us after registering their activity and can share it with any users. Anyone can use the link to receive a reward.
-
-
-#### 2.2 Personalized link 
-A unique link should be generated for each specific user. Activity owners can generate the link once it's been confirmed that a person is eligible for a reward.
-
-To get a personalized link:
+#### 2.1 Issuing SBT via unique link
+This is the preferred way for issuing the SBT. Once users complete all the actions on your side you could request a unique link from our API and just lead user to this link for receiving an SBT:
 
 1. After the activity aproval, contact us to get corresponding ```activity_id```, ```partner_id``` and ```api_key```.
 2. On your side, request users to [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, [simply use](https://www.tapps.center/docs/packages/tma-js-init-data/user) ```window.Telegram.WebApp.initDataUnsafe.user.id```.
 3. Once users complete all the actions on your side, make a [```POST``` request](https://ton-society.github.io/sbt-platform/#/Activities/createRewardLink), passing your ```activity_id```, ```partner_id```, ```api_key``` and one of user identifiers: ```telegram_user_id``` or ```wallet_address```. The response will contain the link.
 4. Share this link with the user.
+
+#### 2.1 Gathering wallets manually
+If you won't be able to implement technical integrations and use our API, you could gather wallet addresses manually and share it with us for manual minting.
 
 ### 3. Access cSBT and user data to display on a project side
 Use TON Society APIs to display minted cSBTs and user information in your project.
