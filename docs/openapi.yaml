@@ -190,22 +190,22 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  /collections/{id}:
+  /collections/{path}:
     get:
       tags:
         - Collections
       summary: Finds an SBT collection
-      description: Returns an SBT collection data given its id in the database
+      description: Returns an SBT collection data given its id or friendly address
       operationId: findCollectionById
       parameters:
-        - name: id
+        - name: path
           in: path
-          description: SBT collection id
+          description: SBT collection id or friendly address
           required: true
           explode: true
           schema:
-            type: number
-            default: 123
+            type: string
+            example: EQDRPEXimR0wcHxijP0ep_p-UCqmEZkkZ6_5KZEgp_cXA3Tn
       responses:
         '200':
           description: Successful operation
@@ -219,22 +219,22 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  /collections/{id}/participants:
+  /collections/{path}/participants:
     get:
       tags:
         - Collections
       summary: Finds activity participants
-      description: Returns a list of users partcipated in the activity related to the SBT collection with the given id
+      description: Returns a list of users (in a random order) participated in the activity related to the SBT collection with the given id or friendly address
       operationId: findCollectionParticipantsById
       parameters:
-        - name: id
+        - name: path
           in: path
-          description: SBT collection id
+          description: SBT collection id or friendly address
           required: true
           explode: true
           schema:
-            type: number
-            default: 123
+            type: string
+            example: EQDRPEXimR0wcHxijP0ep_p-UCqmEZkkZ6_5KZEgp_cXA3Tn
         - name: limit
           in: query
           description: The maximum number of participants to return
