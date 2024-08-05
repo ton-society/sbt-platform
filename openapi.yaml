@@ -190,7 +190,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  /collections/{id}:
+  /collections/{path}:
     get:
       tags:
         - Collections
@@ -219,7 +219,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  /collections/{id}/participants:
+  /collections/{path}/participants:
     get:
       tags:
         - Collections
