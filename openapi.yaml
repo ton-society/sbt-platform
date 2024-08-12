@@ -339,9 +339,6 @@ paths:
       summary: Create a new activity
       description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://society.ton.org/activities/active). Newly created activity is not posted on the website right away - it first needs to go through moderation.
       operationId: createEvent
-      security:
-        - api_key: []
-        - partner_id: []
       requestBody:
         required: true
         content:
@@ -410,6 +407,9 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
+      security:
+        - api_key: []
+        - partner_id: []
   
   /activities/{activity_id}:
     patch:
