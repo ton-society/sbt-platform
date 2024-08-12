@@ -337,7 +337,7 @@ paths:
       tags:
         - Activities
       summary: Create a new activity
-      description: An endpoint that allows to create a new activity of the "Events" activity group. See [ton-society events page](https://society.ton.org/activities/events). Newly created activity is not posted on the website right away - it first needs to go through moderation first. 
+      description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://society.ton.org/activities/active). Newly created activity is not posted on the website right away - it first needs to go through moderation.
       operationId: createEvent
       requestBody:
         required: true
@@ -350,11 +350,11 @@ paths:
                 title:
                   type: string
                   description: The activity title
-                  example: "Open League Summer: Taipei Bootcamp"
+                  example: 'Open League Summer: Taipei Bootcamp'
                 subtitle:
                   type: string
                   description: The activity subtitle
-                  example: "$2,000,000 in prizes and 13 IRL Bootcamps!"
+                  example: '$2,000,000 in prizes and 13 IRL Bootcamps!'
                 description:
                   type: string
                   description: The activity description
@@ -366,15 +366,15 @@ paths:
                 additional_info:
                   type: string
                   description: The activity additional information
-                  example: "Taipei, Taiwan"
+                  example: 'Taipei, Taiwan'
                 start_date:
                   type: string
                   description: The start date of the activity in the appropriate format
-                  example: "2024-05-31"
+                  example: '2024-05-31'
                 end_date:
                   type: string
                   description: The end date of the activity in the appropriate format
-                  example: "2024-06-02"
+                  example: '2024-06-02'
                 cta_button:
                   type: object
                   required: [label, link]
@@ -382,12 +382,18 @@ paths:
                     label:
                       type: string
                       description: Label shown on the CTA button
-                      example: "Event details"
+                      example: 'Event details'
                     link:
                       type: string
                       description: External link opened when the CTA button is clicked
                       example: https://lu.ma/3mx6a7l7
-                    
+                rewards:
+                  type: object
+                  required: [mint_type]
+                  oneOf:
+                    - $ref: '#/components/schemas/RewardsExistingCollection'
+                    - $ref: '#/components/schemas/RewardsManualMint'
+                    - $ref: '#/components/schemas/RewardsHubBased'
       responses:
         '200':
           description: Successful operation
@@ -1080,17 +1086,110 @@ components:
           description: Telegram id associated with an account, to which a reward is to be issued. Can be left empty if wallet_address is provided.
           example: 439739
         attributes:
+          deprecated: true
+          description: Attributes that will be displayed for SBT on marketplaces and at user wallets
           type: array
-          description: Additional SBT attributes to be included in item metadata.
           items:
             type: object
             properties:
               trait_type:
                 type: string
-                example: 'Organizer'
+                example: Organizer
               value:
                 type: string
-                example: 'TON Society Asia'
+                example: TON Society Asia
+        item_metadata:
+          type: object
+          description: Item metadata
+          $ref: '#/components/schemas/ItemMetadataJson'
+
+    ItemMetadataJson:
+      type: object
+      properties:
+        name:
+          description: SBT name
+          type: string
+          example: TON Meetup for Developers and Founders
+        description:
+          description: SBT description
+          type: string
+          example: Reward for participation
+        image:
+          description: SBT image URL
+          type: string
+          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+        content_url:
+          description: URL for an additional content
+          type: string
+          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Meetup%20for%20Developers%20and%20Founders/video.mp4
+        content_type:
+          description: Type of content used for SBT display
+          type: string
+          example: video/mp4
+        buttons:
+          description: Buttons to be displayed on SBT
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+                example: https://society.ton.org/welcome
+              label:
+                type: string
+                example: 'View on TON Society'
+        organizer:
+          description: Organizer category
+          type: string
+          example: TON Society Asia
+        original_activity_url:
+          description: Address used to complete the activity
+          type: string
+          example: https://lu.ma/9ovl6qeq
+        start_date_iso:
+          description: Activity start date
+          type: string
+          example: 2024-02-22
+        end_date_iso:
+          description: Activity end date
+          type: string
+          example: 2024-02-22
+        activity_type:
+          description: Type of activity
+          type: string
+          example: Hackathon
+        place:
+          description: A set of attributes describing the place where activity happens
+          type: object
+          properties:
+            type:
+              type: string
+              example: Offline
+            country_code_iso:
+              type: string
+              example: HK
+            place_coordinates_osm:
+              type: string
+              example: 22.2793278,114.1628131
+            venue_name:
+              type: string
+              example: Congress Center
+        user_data:
+          description: Any additional data provided by user when completing an activity
+          type: string
+          example: John Doe
+        attributes:
+          description: Attributes that will be displayed for SBT on marketplaces and at user wallets
+          type: array
+          items:
+            type: object
+            properties:
+              trait_type:
+                type: string
+                example: Organizer
+              value:
+                type: string
+                example: TON Society Asia
 
     SuccessRewardLink:
       type: object
@@ -1108,6 +1207,186 @@ components:
             reward_link:
               type: string
               example: https://society.ton.org/welcome/52528543-df85-4529-afbd-07ac7c48187d
+
+    RewardsExistingCollection:
+      type: object
+      required: [mint_type, collection_address]
+      properties:
+        mint_type:
+          type: string
+          enum:
+            - existing_collection
+        collection_address:
+          type: string
+          description: Friendly address of the existing collection
+          example: EQBMKz_q9PNYh25t9LneI0lVI5zEab07Fzn_Z8MBtgEd6l7L
+
+    RewardsManualMint:
+      type: object
+      required: [mint_type, collection]
+      properties:
+        mint_type:
+          type: string
+          enum:
+            - manual
+        collection:
+          $ref: '#/components/schemas/CollectionTemplate'
+
+    RewardsHubBased:
+      type: object
+      description:
+        If collection data is not provided, the hub's default collection metadata will be used.
+        Otherwise, the fields you provide will overwrite the hub's default collection metadata.
+      required: [mint_type]
+      properties:
+        mint_type:
+          type: string
+          enum:
+            - hub_based
+        collection:
+          description: Optional collection template payload to overwrite the Hub's default collection template
+          $ref: '#/components/schemas/CollectionTemplate'
+
+    CollectionTemplate:
+      type: object
+      description: Collection metadata.
+      properties:
+        title:
+          type: string
+          description: Title of the collection
+          example: 'Open League Summer: Taipei Bootcamp'
+        description:
+          type: string
+          description: Description of the collection
+          example: 'Open League Summer is a global hackathon for developers, designers, and enthusiasts to build the future of the Open Network Ecosystem'
+        image:
+          type: object
+          description: Image of the collection
+          properties:
+            url:
+              type: string
+              description: URL of the image
+              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+        cover:
+          type: object
+          description: Cover image of the collection
+          properties:
+            url:
+              type: string
+              description: URL of the cover image
+              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+        metadata:
+          type: object
+          description: Metadata of the collection
+          properties:
+            social_links:
+              type: array
+              description: Social links of the collection
+              items:
+                type: string
+                example: https://t.me/tonsociety
+        item_title:
+          type: string
+          description: Item title of the collection
+          example: 'Open League Summer: Taipei Bootcamp'
+        item_description:
+          type: string
+          description: Item description of the collection
+          example: Reward for participation
+        item_image:
+          type: object
+          description: Item image of the collection
+          properties:
+            url:
+              type: string
+              description: URL of the item image
+              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+        item_video:
+          type: object
+          description:
+            Item video of the collection. In case of `hub-based` mint type, pass `null` value explicitly if you
+            don't want to add video to the collection. Otherwise, the video from hub's collection template will be used.
+          properties:
+            url:
+              type: string
+              description: URL of the item video
+              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.mp4
+        item_metadata:
+          type: object
+          description: Item metadata of the collection
+          properties:
+            buttons:
+              type: array
+              description: Buttons displayed at marketplaces and user wallets
+              items:
+                type: object
+                properties:
+                  uri:
+                    type: string
+                    description: Uri of the collection item button
+                    example: https://lu.ma/3mx6a7l7
+                  label:
+                    type: string
+                    description: Label of the collection item button
+                    example: Open in TON Society
+            activity_type:
+              type: string
+              description: Type of the activity
+              example: Event
+            organizer:
+              type: string
+              description: Organizer category
+              example: Community
+            original_activity_url:
+              type: string
+              description: Address used to complete the activity
+              example: https://lu.ma/9ovl6qeq
+            start_date_iso:
+              type: string
+              description: Activity start date in ISO 8601 format
+              example: 2024-01-22
+            end_date_iso:
+              type: string
+              description: Activity end date in ISO 8601 format
+              example: 2024-01-22
+            place:
+              type: object
+              description: A set of attributes describing the place where activity happens
+              properties:
+                type:
+                  type: string
+                  description: Use Online for online events or Offline for offline events
+                  example: Online
+                country_code_iso:
+                  type: string
+                  description: If type is Offline, specify two-letter country code from ISO 3166-1
+                  example: US
+                place_coordinates_osm:
+                  type: string
+                  description: If type is Offline, specify place coordinates (lat, lon).
+                  example: 47.6062095,-122.3320708
+                venue_name:
+                  type: string
+                  description: If type is Offline, specify venue name
+                  example: Congress Hall
+            user_data:
+              type: string
+              description: Any additional data provided by user when completing an activity
+              example: TON Society Taipei
+            attributes:
+              type: array
+              description: Attributes that will be displayed for SBT on marketplaces and at user wallets
+              items:
+                type: object
+                properties:
+                  trait_type:
+                    type: string
+                    description: Trait type of the collection item attribute
+                    example: Strength
+                  value:
+                    type: string
+                    description: Value of the collection item attribute
+                    example: 99
 
   securitySchemes:
     api_key:
