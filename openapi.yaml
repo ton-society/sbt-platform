@@ -337,7 +337,7 @@ paths:
       tags:
         - Activities
       summary: Create a new activity
-      description: An endpoint that allows to create a new activity of the "Events" activity group. See [ton-society events page](https://society.ton.org/activities/events). Newly created activity is not posted on the website right away - it first needs to go through moderation first.
+      description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://society.ton.org/activities/active). Newly created activity is not posted on the website right away - it first needs to go through moderation.
       operationId: createEvent
       security:
         - api_key: []
