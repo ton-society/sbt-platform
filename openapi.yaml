@@ -391,8 +391,8 @@ paths:
                   type: object
                   required: [mint_type]
                   oneOf:
-                    - $ref: '#/components/schemas/RewardsExistingCollection'
                     - $ref: '#/components/schemas/RewardsManualMint'
+                    - $ref: '#/components/schemas/RewardsExistingCollection'
                     - $ref: '#/components/schemas/RewardsHubBased'
       responses:
         '200':
