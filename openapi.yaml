@@ -570,6 +570,47 @@ paths:
         '500':
           description: Internal server error
 
+  /activities/{activity_id}/rewards/{participant_id}/status:
+    get:
+      tags:
+        - Activities
+      summary: Fetch status of a unique reward link given to a activity particpant
+      description: Returns status of a unique reward link using participant's wallet friendly address or Telegram user id. Activity participants can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
+      operationId: getParticipantRewardStatus
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity, for wich the participant was rewarded
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 182
+        - name: participant_id
+          in: path
+          description: Unique identifier of the activity participant, either wallet address (friendly format) or Telegram user Id
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: 733289
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLinkStatus'
+        '400':
+          description: Invalid query/path/body param provided
+        '404':
+          description: Resource not found. There is no such combination of the activity id and participant data
+        '500':
+          description: Internal server error
+
   /csbts/collections/{address}/v1/items/{index}:
     get:
       tags:
@@ -1387,6 +1428,35 @@ components:
                     type: string
                     description: Value of the collection item attribute
                     example: 99
+
+    SuccessRewardLinkStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+              description: |
+                Indicates the status of the reward link.
+                Possible values:
+                - `NOT_CLAIMED`: The reward has not been claimed by the participant.
+                - `CLAIMED`: The reward has been claimed by the participant.
+                - `MINTED`: The reward has been minted on the society.ton.org side.
+                - `RECEIVED`: The reward has been received by the participant and visible in the society.ton.org profile.
+              example: NOT_CLAIMED
+              enum:
+                - NOT_CLAIMED
+                - CLAIMED
+                - MINTED
+                - RECEIVED
 
   securitySchemes:
     api_key:
