@@ -1190,11 +1190,11 @@ components:
         start_date_iso:
           description: Activity start date
           type: string
-          example: 2024-02-22
+          example: "2024-02-22"
         end_date_iso:
           description: Activity end date
           type: string
-          example: 2024-02-22
+          example: "2024-02-22"
         activity_type:
           description: Type of activity
           type: string
