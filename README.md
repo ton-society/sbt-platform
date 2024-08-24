@@ -15,7 +15,7 @@ We will review all applications and contact activity owners once the application
 ### 2. Issuing a cSBT
 Once users complete all the actions on your side you could request a unique link from our API and just lead user to this link for receiving a cSBT:
 
-1. Ask users to [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, [simply use](https://www.tapps.center/docs/packages/tma-js-init-data/user) ```window.Telegram.WebApp.initDataUnsafe.user.id```.
+1. Ask users to [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, you could just use Telegram address instead of wallet. You could [get it after Mini App launch](https://docs.telegram-mini-apps.com/platform/init-data).
 2. Once users complete all the actions on your side, make a [```POST``` request](https://ton-society.github.io/sbt-platform/#/Activities/createRewardLink), passing your ```activity_id```, ```partner_id```, ```api_key``` and one of user identifiers: ```telegram_user_id``` or ```wallet_address```. The response will contain the link.
 3. Share this link with the user.
 
