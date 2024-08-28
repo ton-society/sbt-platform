@@ -816,7 +816,7 @@ components:
           example: Reward for valuable TON Ecosystem contributions
         image:
           type: string
-          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+          example: https://sbt-bot-minter.s3.amazonaws.com//logo.jpg
         content_json:
           type: object
         created_at:
@@ -871,7 +871,7 @@ components:
           example: 151
         content_uri:
           type: string
-          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/collection.json
+          example: https://sbt-bot-minter.s3.amazonaws.com//collection.json
         raw_owner_address:
           type: string
           example: 0:C290189A787E15FBA30142A3250B70F3019F8C8553E9A5E1BAF65723AA3C6C47
@@ -886,7 +886,7 @@ components:
           example: TON Bounties program is an open community initiative that is fast-forwarding support for valuable contributions enhancing The Open Network Ecosystem
         image:
           type: string
-          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+          example: https://sbt-bot-minter.s3.amazonaws.com//logo.jpg
         content_json:
           type: object
         created_at:
@@ -1072,7 +1072,7 @@ components:
               example: TON Bounties program is an open community initiative that is fast-forwarding support for valuable contributions enhancing The Open Network Ecosystem
             image:
               type: string
-              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+              example: https://sbt-bot-minter.s3.amazonaws.com//logo.jpg
         index:
           type: string
           description: Item's index
@@ -1158,7 +1158,7 @@ components:
         image:
           description: SBT image URL
           type: string
-          example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+          example: https://sbt-bot-minter.s3.amazonaws.com//logo.jpg
         content_url:
           description: URL for an additional content
           type: string
@@ -1307,7 +1307,7 @@ components:
             url:
               type: string
               description: URL of the image
-              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+              example: https://sbt-bot-minter.s3.amazonaws.com//logo.jpg
         cover:
           type: object
           description: Cover image of the collection
@@ -1315,7 +1315,7 @@ components:
             url:
               type: string
               description: URL of the cover image
-              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+              example: https://tonsociety.s3.eu-central-2.amazonaws.com/e508ec26-2b3a-456f-b53b-55b9f4de1e4e.png
         metadata:
           type: object
           description: Metadata of the collection
@@ -1341,7 +1341,7 @@ components:
             url:
               type: string
               description: URL of the item image
-              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.jpg
+              example: https://tonsociety.s3.eu-central-2.amazonaws.com/596c2c53-deb2-4afd-9318-3d01238ce7c0.png
         item_video:
           type: object
           description:
@@ -1351,7 +1351,7 @@ components:
             url:
               type: string
               description: URL of the item video
-              example: https://sbt-bot-minter.s3.amazonaws.com/TON%20Bounties%20Contributors/logo.mp4
+              example: https://sbt-bot-minter.s3.amazonaws.com/AMA-Session%20with%20Ankit%20Jaiswal-aiadjg/itemImage.mp4
         item_metadata:
           type: object
           description: Item metadata of the collection
