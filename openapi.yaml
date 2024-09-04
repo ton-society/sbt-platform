@@ -14,6 +14,8 @@ tags:
     description: Handle data related to the collections of SBTs stroed in the internal database
   - name: User Activities
     description: Handle data related to the user activities
+  - name: Compressed SBTs
+    description: Explore data related to the compressed SBT implementation
 paths:
   /status:
     get:
