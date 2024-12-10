@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Ton Society API
+  title: TON Society API
   description: Public API specification
   version: 1.0.0
 servers:
@@ -412,8 +412,39 @@ paths:
       security:
         - api_key: []
         - partner_id: []
-  
+
   /activities/{activity_id}:
+    get:
+      tags:
+        - Activities
+      summary: Finds activity by its internal id
+      description: Featch activity data including the address of the corresponding compressed collection (if already minted). The address corresponding to the given activity is under the "Rewards" field, i.e., `data.rewards.collection_address`. If `collection_address` is missing, no collection has been minted yet. For details, see `strapi.ActivityAttributes` specifications. If `publishedAt` field is not present, the activity hasn't been published yet.
+      operationId: findActivity
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity to be fetched
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 106
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessGetActivityResponseDTO'
+        '400':
+          description: Invalid query/path/body param provided
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+      security:
+        - api_key: []
+        - partner_id: []
     patch:
       tags:
         - Activities
@@ -1456,6 +1487,186 @@ components:
                 - CLAIMED
                 - MINTED
                 - RECEIVED
+
+    JoinButtonAttributes:
+      type: object
+      properties:
+        link:
+          type: string
+        title:
+          type: string
+
+    FileAttributes:
+      properties:
+        url:
+          type: string
+      type: object
+
+    OptionalFileAttributes:
+      properties:
+        file:
+          $ref: '#/components/schemas/FileAttributes'
+        present:
+          type: boolean
+      type: object
+
+    Place:
+      properties:
+        country_code_iso:
+          type: string
+        place_coordinates_osm:
+          type: string
+        type:
+          type: string
+        venue_name:
+          type: string
+      type: object
+
+    AttributeJson:
+      properties:
+        trait_type:
+          type: string
+        value:
+          type: string
+      type: object
+
+    ItemMetadata:
+      properties:
+        activity_type:
+          type: string
+        attributes:
+          items:
+            $ref: '#/components/schemas/AttributeJson'
+          type: array
+        buttons:
+          items:
+            $ref: '#/components/schemas/ItemMetadataButton'
+          type: array
+        content_type:
+          type: string
+        content_url:
+          type: string
+        description:
+          type: string
+        end_date_iso:
+          type: string
+        image:
+          type: string
+        name:
+          type: string
+        organizer:
+          type: string
+        original_activity_url:
+          type: string
+        place:
+          $ref: '#/components/schemas/Place'
+        start_date_iso:
+          type: string
+        user_data:
+          type: string
+      type: object
+
+    ItemMetadataButton:
+      properties:
+        label:
+          type: string
+        uri:
+          type: string
+      type: object
+
+    CollectionMetadata:
+      properties:
+        cover_image:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        name:
+          type: string
+        social_links:
+          items:
+            type: string
+          type: array
+      type: object
+
+    CollectionAttributes:
+      type: object
+      properties:
+        cover:
+          $ref: '#/components/schemas/FileAttributes'
+        description:
+          type: string
+        image:
+          $ref: '#/components/schemas/FileAttributes'
+        item_description:
+          type: string
+        item_image:
+          $ref: '#/components/schemas/FileAttributes'
+        item_metadata:
+          $ref: '#/components/schemas/ItemMetadata'
+        item_title:
+          type: string
+        item_video:
+          $ref: '#/components/schemas/OptionalFileAttributes'
+        metadata:
+          $ref: '#/components/schemas/CollectionMetadata'
+        title:
+          type: string
+
+    RewardsAttributes:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/CollectionAttributes'
+        collection_address:
+          type: string
+        hub:
+          properties:
+            id:
+              type: integer
+          type: object
+        mint_type:
+          type: string
+
+    GetActivityResponseDTO:
+      type: object
+      properties:
+        additional_info:
+          type: string
+        description:
+          type: string
+        end_date:
+          type: string
+        join_button:
+          $ref: '#/components/schemas/JoinButtonAttributes'
+        link:
+          type: string
+        public_path:
+          type: string
+        publishedAt:
+          type: string
+        rewards:
+          $ref: '#/components/schemas/RewardsAttributes'
+        start_date:
+          type: string
+        subtitle:
+          type: string
+        title:
+          type: string
+
+    SuccessGetActivityResponseDTO:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetActivityResponseDTO'
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
 
   securitySchemes:
     api_key:
