@@ -106,47 +106,6 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  /users/{username}/rank:
-    get:
-      tags:
-        - Users
-      summary: Finds a rank of the user
-      description: Returns user's rank in the contributors list given user's username
-      operationId: findUserRankByUsername
-      parameters:
-        - name: username
-          in: path
-          description: User's username
-          required: true
-          explode: true
-          schema:
-            type: string
-            default: 41d888dc37
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: success
-                    enum:
-                      - success
-                      - error
-                      - fail
-                  data:
-                    type: integer
-                    format: int64
-                    example: 112
-        '400':
-          description: Invalid query/path/body param provided
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
   /users/{username}/sbts:
     get:
       tags:
@@ -258,44 +217,6 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error 
-  /last-activities:
-    get:
-      tags:
-        - User Activities
-      summary: Finds last activities made by user, i.e., last recevied awards
-      description: An endpoint that compounds data from Users model, Sbt Tokens model, and Strapi Activties. Last activities are most recent rewards (or SBTs) received by users.
-      operationId: findLastActivities
-      parameters:
-        - name: _start
-          in: query
-          description: Paginated list start index
-          required: true
-          explode: true
-          schema:
-            type: number
-            default: 0
-        - name: _end
-          in: query
-          description: Paginated list end index
-          required: true
-          explode: true
-          schema:
-            type: number
-            default: 10
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessLastActivities'
-        '400':
-          description: Invalid query/path/body param provided
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
-  
   /hubs:
     get:
       tags:
