@@ -12,8 +12,6 @@ tags:
     description: Handle users related data
   - name: Collections
     description: Handle data related to the collections of SBTs stroed in the internal database
-  - name: User Activities
-    description: Handle data related to the user activities
   - name: Compressed SBTs
     description: Explore data related to the compressed SBT implementation
 paths:
@@ -216,7 +214,7 @@ paths:
         '404':
           description: Resource not found
         '500':
-          description: Internal server error 
+          description: Internal server error
   /hubs:
     get:
       tags:
@@ -260,7 +258,7 @@ paths:
       tags:
         - Activities
       summary: Create a new activity
-      description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://society.ton.org/activities/active). Newly created activity is not posted on the website right away - it first needs to go through moderation.
+      description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://society.ton.org/activities/active). Newly created activity is posted on the website and is available by its slug (use GET /activities/{activity_id} request to find the activity slug) but might not be present in the catalouge. In order to appear under one of the activity categories, the activity needs to go through additional moderation. 
       operationId: createEvent
       requestBody:
         required: true
@@ -293,11 +291,11 @@ paths:
                 start_date:
                   type: string
                   description: The start date of the activity in the appropriate format
-                  example: '2024-05-31'
+                  example: '2024-12-16'
                 end_date:
                   type: string
                   description: The end date of the activity in the appropriate format
-                  example: '2024-06-02'
+                  example: '2025-12-31'
                 cta_button:
                   type: object
                   required: [label, link]
@@ -411,11 +409,11 @@ paths:
                 start_date:
                   type: string
                   description: The start date of the activity in the appropriate format. To nullify pass "null"
-                  example: "2024-05-31"
+                  example: "2024-12-16"
                 end_date:
                   type: string
                   description: The end date of the activity in the appropriate format. To nullify pass "null"
-                  example: "2024-06-02"
+                  example: "2025-12-31"
                 cta_button:
                   type: object
                   properties:
@@ -692,11 +690,18 @@ paths:
           schema:
             type: number
             default: 129
-        - description: File
-          in: formData
-          name: file
-          required: true
-          type: file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              default: 129
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: CSV file containing the Telegram IDs
       security:
         - api_key: []
         - partner_id: []
@@ -732,21 +737,21 @@ paths:
           required: true
           explode: true
           schema:
-            type: number
+            type: integer
             default: 1229
-        - description: Claimie telegram user id
+        - name: telegram_id
           in: path
-          name: telegram_id
-          required: true
-          type: integer
-        - description: Custom item metadata for allowlist entry
-          in: body
-          name: message
+          description: Claimie telegram user id
           required: true
           schema:
-            $ref: '#/definitions/ItemMetadataJson'
-      produces:
-      - application/json
+            type: integer
+            default: 6685490986
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemMetadataJson'
       security:
         - api_key: []
         - partner_id: []
@@ -780,11 +785,17 @@ paths:
           schema:
             type: number
             default: 129
-        - description: File
-          in: formData
-          name: file
+      requestBody:
           required: true
-          type: file
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    format: binary
+                    description: CSV file containing the friendly wallet addresses
       security:
         - api_key: []
         - partner_id: []
@@ -822,21 +833,19 @@ paths:
           schema:
             type: number
             default: 1229
-        - description: Claimie wallet address in the friendly format
+        - name: friendly_owner_address
           in: path
-          name: friendly_owner_address
+          description: Claimie wallet address in the friendly format
           required: true
           schema:
             type: string
             default: UQD0NThTbnfyouCHC9bLmtCD6vuMwKZ75EzVs2u0DELBFSzS
-        - description: Custom item metadata for allowlist entry
-          in: body
-          name: message
-          required: true
-          schema:
-            $ref: '#/definitions/ItemMetadataJson'
-      produces:
-      - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemMetadataJson'
       security:
         - api_key: []
         - partner_id: []
@@ -1111,7 +1120,7 @@ components:
                         type: string
                   user:
                     $ref: '#/components/schemas/PublicUser'
-    
+
     Hub:
       type: object
       properties:
@@ -1128,7 +1137,7 @@ components:
             url:
               type: string
               example: https://t.me/tonsociety_chat
-  
+
     SuccessHubs:
       type: object
       properties:
@@ -1165,7 +1174,7 @@ components:
               type: string
               description: Unique society.ton.org url of the newly created activity (the value might change after moderation)
               example: https://society.ton.org/open-league-summer-taipei-bootcamp
-      
+
     EmptySuccess:
       type: object
       properties:
@@ -1178,7 +1187,7 @@ components:
             - fail
         data:
           type: object
-  
+
     CsbtItem:
       type: object
       properties:
@@ -1206,7 +1215,7 @@ components:
           type: string
           description: Item's index
           example: 0
-          
+
     CsbtItemByIndex:
       type: object
       properties:
@@ -1216,7 +1225,7 @@ components:
           type: string
           description: Proof cell that allows one claiming an item on the blockchain
           example: te6cckEBBgEAeQACAAEDAUOAFa1KqA2Oswxbo4Rgh/q6NEaPLuK9o3fo1TFGn+MySjqQAgAMMi5qc29uAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQBQF4S3GMDJY/HoZd6TCREIOnCaYlF23hNzJaSsfMd1S7nBQAA8muEeQ==
-  
+
     CsbtItems:
       type: object
       properties:
@@ -1241,7 +1250,7 @@ components:
           type: string
           description: The address of the collection smart contract that this API augments
           example: 0:000000000000000000000000000000000000000000000000000000000000000
-  
+
 
     CreateRewardLinkBody:
       type: object
@@ -1269,8 +1278,6 @@ components:
                 type: string
                 example: TON Society Asia
         item_metadata:
-          type: object
-          description: Item metadata
           $ref: '#/components/schemas/ItemMetadataJson'
 
     ItemMetadataJson:
@@ -1319,11 +1326,11 @@ components:
         start_date_iso:
           description: Activity start date
           type: string
-          example: "2024-02-22"
+          example: "2024-12-16"
         end_date_iso:
           description: Activity end date
           type: string
-          example: "2024-02-22"
+          example: "2025-12-31"
         activity_type:
           description: Type of activity
           type: string
@@ -1414,7 +1421,6 @@ components:
           enum:
             - hub_based
         collection:
-          description: Optional collection template payload to overwrite the Hub's default collection template
           $ref: '#/components/schemas/CollectionTemplate'
 
     CollectionTemplate:
@@ -1514,11 +1520,11 @@ components:
             start_date_iso:
               type: string
               description: Activity start date in ISO 8601 format
-              example: 2024-01-22
+              example: 2024-12-16
             end_date_iso:
               type: string
               description: Activity end date in ISO 8601 format
-              example: 2024-01-22
+              example: 2025-12-16
             place:
               type: object
               description: A set of attributes describing the place where activity happens
