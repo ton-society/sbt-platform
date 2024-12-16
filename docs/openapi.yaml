@@ -676,6 +676,184 @@ paths:
         '500':
           description: Internal server error
 
+  /activities/{activity_id}/allowlist/telegram-ids:
+    post:
+      tags:
+        - Allowlists
+      summary: Upload a single column csv
+      description: Upload a single column csv containing telegram ids to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward. In case of existing pair of `activity_id` and `telegram_id` (from the .csv), an error is thrown. The file limit is 21 MB. Maximum number of rows is 350000.
+      operationId: creatTelegramUserIdAllowlistEntries
+      parameters:
+        - name: activity_id
+          in: path
+          description: Activity id
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 129
+        - description: File
+          in: formData
+          name: file
+          required: true
+          type: file
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path/body param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '403':
+          description: Not enough permissions to access the requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+
+  /activities/{activity_id}/allowlist/telegram-ids/{telegram_id}:
+    post:
+      tags:
+        - Allowlists
+      summary: Add a single telegram user id allowlist entry
+      description: Create a telegram id entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward.
+      operationId: createTelegramUserIdAllowlistEntry
+      parameters:
+        - name: activity_id
+          in: path
+          description: Activity id
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1229
+        - description: Claimie telegram user id
+          in: path
+          name: telegram_id
+          required: true
+          type: integer
+        - description: Custom item metadata for allowlist entry
+          in: body
+          name: message
+          required: true
+          schema:
+            $ref: '#/definitions/ItemMetadataJson'
+      produces:
+      - application/json
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '500':
+          description: Internal server error
+
+  /activities/{activity_id}/allowlist/wallets:
+    post:
+      tags:
+        - Allowlists
+      summary: Upload a single column csv
+      description: Upload a single column csv containing friendly wallet addresses to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward. In case of existing pair of `activity_id` and `friendly_owner_address` (from the .csv), an error is thrown. The file limit is 21 MB. Maximum number of rows is 350000.
+      operationId: createWalletAllowlistEntries
+      parameters:
+        - name: activity_id
+          in: path
+          description: Activity id
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 129
+        - description: File
+          in: formData
+          name: file
+          required: true
+          type: file
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path/body param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '403':
+          description: Not enough permissions to access the requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+
+  /activities/{activity_id}/allowlist/wallets/{friendly_owner_address}:
+    post:
+      tags:
+        - Allowlists
+      summary: Add a single telegram user id allowlist entry
+      description: Create a wallet address entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity particiapnts, only particiapnts from allowlist can claim the reward.
+      operationId: createWalletAllowlistEntry
+      parameters:
+        - name: activity_id
+          in: path
+          description: Activity id
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1229
+        - description: Claimie wallet address in the friendly format
+          in: path
+          name: friendly_owner_address
+          required: true
+          schema:
+            type: string
+            default: UQD0NThTbnfyouCHC9bLmtCD6vuMwKZ75EzVs2u0DELBFSzS
+        - description: Custom item metadata for allowlist entry
+          in: body
+          name: message
+          required: true
+          schema:
+            $ref: '#/definitions/ItemMetadataJson'
+      produces:
+      - application/json
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '500':
+          description: Internal server error
+
 components:
   schemas:
     PublicUser:
