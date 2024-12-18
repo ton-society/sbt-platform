@@ -1,21 +1,21 @@
 # TON Society Platform
 [TON Society Platform](https://society.ton.org) aims to connect projects and users through SBT badges. The platform offers the following:
-- allows projects to issue SBT bagdges to their users easily and free of charge
-- helps projects attract more users.
+- allows projects to issue SBT badges to their users easily and free of charge
+- helps projects attract more users
 - enables users to receive additional badges across the ecosystems, meet and compete
 
 [Learn more](https://eco.ton.org/en/opportunities/make-sbt-campaign)
 
 ## Steps for direct integration
 ### 1. Register an activity
-1. Contact us to receive ```partner_id``` and ```api_key``` which is needed to issue cSTBs.
-2. [Register your activity via API](https://ton-society.github.io/sbt-platform/#/Activities/createEvent). You will receive ```activity_id``` back that is required for issuing cSBTs.
-3. [You could edit activity details](https://ton-society.github.io/sbt-platform/#/Activities/updateEvent). For now, SBT details could not be changed via API. If you need to change that, please contact us directly.
+1. Contact us to receive your project's ```partner_id``` and ```api_key```, which provides access to the API and endpoints to issue cSTBs.
+2. [Register your activity via API](https://ton-society.github.io/sbt-platform/#/Activities/createEvent). Use generated ```activity_id``` in other endpoints.
+3. [You could edit activity details](https://ton-society.github.io/sbt-platform/#/Activities/updateEvent). At the moment, SBT details cannot be changed via API. If you need to change that, please contact us directly.
 
 ### 2. Issuing a cSBT
 Once users complete all the actions on your side you could request a unique link from our API and just lead user to this link for receiving a cSBT:
 
-1. Ask users to [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, it's prefferable to use Telegram user id instead of wallet. You could [get it after Mini App launch](https://docs.telegram-mini-apps.com/platform/init-data).
+1. Ask users to [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, it's prefferable to use Telegram user id instead of wallet. See [how to obtain it after the Mini App launch](https://docs.telegram-mini-apps.com/platform/init-data).
 2. Once users complete all the actions on your side, submit [Telegram user ID](https://ton-society.github.io/sbt-platform/#/Allowlists/createTelegramUserIdAllowlistEntry) or [User friendly wallet address](https://ton-society.github.io/sbt-platform/#/Allowlists/createWalletAllowlistEntry) passing your ```activity_id```. You will get the link for claiming cSBT in the response. This link is common for all the users.
 4. Share the link with the user.
 5. To get the current status of user's badge use ```/rewards/{participant_id}/status``` [endpoint](https://ton-society.github.io/sbt-platform/#/Activities/getParticipantRewardStatus):
