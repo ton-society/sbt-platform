@@ -446,8 +446,9 @@ paths:
     post:
       tags:
         - Activities
-      summary: Generates a unique reward link
-      description: Returns a unique reward link for users to receive rewards through particpation in activities. The link is generated based on activity ID, user's unique identificator (wallet friendly address or Telegram user id). For example, users can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
+      summary: (to be deprecated soon)
+      description: This endpoint will be **deprecated** soon, please consider using an [alternative approach](https://ton-society.github.io/sbt-platform/#/Allowlists). Otherwise, it returns a unique reward link for users to receive rewards through particpation in activities. The link is generated based on activity ID, user's unique identificator (wallet friendly address or Telegram user id). For example, users can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
+
       operationId: createRewardLink
       parameters:
         - name: activity_id
