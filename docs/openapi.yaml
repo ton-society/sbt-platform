@@ -30,7 +30,7 @@ paths:
     get:
       tags:
         - Users
-      summary: Finds users
+      summary: Finds all users
       description: Returns a list of top users in the order of the number of awards received by each user, `is_name_changed` field, `is_telegram_verified` field, the date awards has been received, and, finally, user Id. Only publicly available data is exposed.
       operationId: findUsers
       parameters:
@@ -219,7 +219,7 @@ paths:
     get:
       tags:
         - Activities
-      summary: Finds paginated list of ton-society hubs
+      summary: Finds all Hubs
       description: An endpoint that compounds data from Users model, Sbt Tokens model, and Strapi Activties. Last activities are most recent rewards (or SBTs) received by users.
       operationId: findHubs
       parameters:
@@ -257,7 +257,7 @@ paths:
     post:
       tags:
         - Activities
-      summary: Create a new activity
+      summary: Creates a new activity
       description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://society.ton.org/activities/active). Newly created activity is posted on the website and is available by its slug (use GET /activities/{activity_id} request to find the activity slug) but might not be present in the catalouge. In order to appear under one of the activity categories, the activity needs to go through additional moderation. 
       operationId: createEvent
       requestBody:
@@ -336,7 +336,7 @@ paths:
     get:
       tags:
         - Activities
-      summary: Finds activity by its internal id
+      summary: Finds an activity
       description: Featch activity data including the address of the corresponding compressed collection (if already minted). The address corresponding to the given activity is under the "Rewards" field, i.e., `data.rewards.collection_address`. If `collection_address` is missing, no collection has been minted yet. For details, see `strapi.ActivityAttributes` specifications. If `publishedAt` field is not present, the activity hasn't been published yet.
       operationId: findActivity
       parameters:
@@ -367,7 +367,7 @@ paths:
     patch:
       tags:
         - Activities
-      summary: Update an existing activity (earlier created by the same partner id)
+      summary: Updates an activity
       description: An endpoint that allows to update an activity of the "Events" activity group. See [ton-society events page](https://society.ton.org/activities/events).
       operationId: updateEvent
       parameters:
@@ -446,7 +446,7 @@ paths:
     post:
       tags:
         - Activities
-      summary: (to be deprecated soon)
+      summary: Fetch a unique reward link (deprecated)
       description: This endpoint will be **deprecated** soon, please consider using an [alternative approach](https://ton-society.github.io/sbt-platform/#/Allowlists). Otherwise, it returns a unique reward link for users to receive rewards through particpation in activities. The link is generated based on activity ID, user's unique identificator (wallet friendly address or Telegram user id). For example, users can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
 
       operationId: createRewardLink
@@ -486,7 +486,7 @@ paths:
     get:
       tags:
         - Activities
-      summary: Fetch a unique reward link for activity particpants
+      summary: Fetch a unique reward link
       description: Returns a unique reward link using participant's wallet friendly address or Telegram user id. Activity participants can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
       operationId: findRewardLink
       parameters:
@@ -527,7 +527,7 @@ paths:
     get:
       tags:
         - Activities
-      summary: Fetch status of a unique reward link given to a activity particpant
+      summary: Fetch status of a unique reward link
       description: Returns status of a unique reward link using participant's wallet friendly address or Telegram user id. Activity participants can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
       operationId: getParticipantRewardStatus
       parameters:
@@ -565,7 +565,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: For a given collection, returns an item data and the proor cell
+      summary: Fetch item data and the proor cell
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex)
       operationId: findCsmtItem
       parameters:
@@ -603,7 +603,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: For a given collection, returns list of item in the slice given its offset and count
+      summary: Fetch list of items in the slice given its offset and count
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#2-itemsoffsetoffsetcountcount)
       operationId: findCsbtItems
       parameters:
@@ -649,7 +649,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: Returns the state of a compressed SBT collection
+      summary: Fetch the state of a compressed SBT collection
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#3-state)
       operationId: findCsbtCollectionState
       parameters:
@@ -679,7 +679,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Upload a single column csv
+      summary: Add telegram ids to allowlist
       description: Upload a single column csv containing telegram ids to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward. In case of existing pair of `activity_id` and `telegram_id` (from the .csv), an error is thrown. The file limit is 21 MB. Maximum number of rows is 350000.
       operationId: creatTelegramUserIdAllowlistEntries
       parameters:
@@ -728,7 +728,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Add a single telegram user id allowlist entry
+      summary: Add a single telegram id to allowlist
       description: Create a telegram id entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward.
       operationId: createTelegramUserIdAllowlistEntry
       parameters:
@@ -774,7 +774,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Upload a single column csv
+      summary: Add wallet addresses to allowlist
       description: Upload a single column csv containing friendly wallet addresses to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward. In case of existing pair of `activity_id` and `friendly_owner_address` (from the .csv), an error is thrown. The file limit is 21 MB. Maximum number of rows is 350000.
       operationId: createWalletAllowlistEntries
       parameters:
@@ -822,7 +822,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Add a single telegram user id allowlist entry
+      summary: Add a single wallet address to allowlist
       description: Create a wallet address entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity particiapnts, only particiapnts from allowlist can claim the reward.
       operationId: createWalletAllowlistEntry
       parameters:
