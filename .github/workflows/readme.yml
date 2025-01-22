@@ -15,7 +15,9 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v4
 
-      - name: GitHub Action
-        uses: readmeio/rdme@v10
-        with:
-          rdme: openapi:upload ./docs/openapi.yaml --key=${{ secrets.README_API_KEY }}
+      - name: Install rdme cli
+        run: npm install -g rdme
+
+      - name: Upload openapi.yaml
+        working-directory: docs
+        run: rdme openapi upload openapi.yaml --key=${{ secrets.README_API_KEY }}
