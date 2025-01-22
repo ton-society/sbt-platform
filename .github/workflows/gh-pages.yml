@@ -1,4 +1,4 @@
-name: Publish OpenAPI Specs
+name: Sync OpenAPI definition to Github Pages
 
 on:
   push:

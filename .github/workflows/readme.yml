@@ -1,0 +1,21 @@
+name: Sync OpenAPI definition to readme.com
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/**
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+
+      - name: GitHub Action
+        uses: readmeio/rdme@v10
+        with:
+          rdme: openapi:upload ./docs/openapi.yaml --key=${{ secrets.README_API_KEY }} --id=API_DEFINITION_ID
