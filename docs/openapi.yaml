@@ -442,46 +442,6 @@ paths:
         - api_key: []
         - partner_id: []
 
-  /activities/{activity_id}/rewards:
-    post:
-      tags:
-        - Activities
-      summary: Fetch a unique reward link (deprecated)
-      description: This endpoint will be **deprecated** soon, please consider using an [alternative approach](https://ton-society.github.io/sbt-platform/#/Allowlists). Otherwise, it returns a unique reward link for users to receive rewards through particpation in activities. The link is generated based on activity ID, user's unique identificator (wallet friendly address or Telegram user id). For example, users can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
-
-      operationId: createRewardLink
-      parameters:
-        - name: activity_id
-          in: path
-          description: Activity id
-          required: true
-          explode: true
-          schema:
-            type: number
-            default: 129
-      security:
-        - api_key: []
-        - partner_id: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateRewardLinkBody'
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessRewardLink'
-        '400':
-          description: Invalid query/path/body param provided
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
-
   /activities/{activity_id}/rewards/{participant_id}:
     get:
       tags:
