@@ -31,7 +31,7 @@ paths:
       tags:
         - Users
       summary: Finds users
-      description: Finds top users in the order of the number of awards received, `is_name_changed` field, `is_telegram_verified` field, the date awards has been received, and, finally, user Id. Only publicly available data is exposed.
+      description: Finds top users in the order of the number of awards received by each user, `is_name_changed` field, `is_telegram_verified` field, the date awards has been received, and, finally, user Id. Only publicly available data is exposed.
       operationId: findUsers
       parameters:
         - name: _start
