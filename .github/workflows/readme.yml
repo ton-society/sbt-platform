@@ -18,4 +18,4 @@ jobs:
       - name: GitHub Action
         uses: readmeio/rdme@v10
         with:
-          rdme: openapi:upload ./docs/openapi.yaml --key=${{ secrets.README_API_KEY }} --id=API_DEFINITION_ID
+          rdme: openapi:upload ./docs/openapi.yaml --key=${{ secrets.README_API_KEY }}
