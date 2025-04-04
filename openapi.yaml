@@ -612,8 +612,6 @@ paths:
           description: Invalid query/path/body param provided
         '404':
           description: Resource not found
-        '404':
-          description: Resource not found
         '429':
           description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
