@@ -441,6 +441,122 @@ paths:
       security:
         - api_key: []
         - partner_id: []
+    delete:
+      tags:
+        - Activities
+      summary: Deletes an activity
+      description: An endpoint that allows to delete an activity only if a corresponding compressed collection has not been minted yet
+      operationId: deleteEvent
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity to be deleted
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1101
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccess'
+        '400':
+          description: Invalid query/path/body param provided
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+      security:
+        - api_key: []
+        - partner_id: []
+
+  /activities/{activity_id}/metadata:
+    put:
+      tags:
+        - Activities
+      summary: Replace the metadata for the collection corresponding to the given activity id
+      description: "Replace (i.e., puts) metadata of a minted compressed collection with a new one passed in the body param. The me can only be update for collection bined to an activity. Note: 1) this endpoint does not update items metadata even if it's the same as in collection 2) changes may take a while since the collection data might be cached."
+      operationId: putCollectionMetadata
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1101
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionMetadata'
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '500':
+          description: Internal server error
+
+  /activities/{activity_id}/metadata/{friendly_owner_address}:
+    put:
+      tags:
+        - Activities
+      summary: Replace the item metadata for the given item owner
+      description: "Replace (i.e., put) metadata for the item that was rewarded to a user with a given participant id (wallet address or telegram user id). Note: this endpoint doesn't clean SBT token metadata cache in leaderboards or paginated lists. However, as soon as the cache expires, requested changes in the metadata should be available."
+      operationId: putItemMetadata
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1101
+        - name: friendly_owner_address
+          in: path
+          description: Claimie wallet address in the friendly format
+          required: true
+          schema:
+            type: string
+            default: UQD0NThTbnfyouCHC9bLmtCD6vuMwKZ75EzVs2u0DELBFSzS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemMetadataJson'
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '500':
+          description: Internal server error
 
   /activities/{activity_id}/rewards/{participant_id}:
     get:
