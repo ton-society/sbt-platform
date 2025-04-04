@@ -326,6 +326,8 @@ paths:
           description: Invalid query/path/body param provided
         '404':
           description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
       security:
@@ -359,6 +361,8 @@ paths:
           description: Invalid query/path/body param provided
         '404':
           description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
       security:
@@ -436,6 +440,8 @@ paths:
           description: Invalid query/path/body param provided
         '404':
           description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
       security:
@@ -467,6 +473,8 @@ paths:
           description: Invalid query/path/body param provided
         '404':
           description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
       security:
@@ -509,6 +517,10 @@ paths:
           description: Invalid query/path param provided
         '401':
           description: Erroneous pair of API key and Partner Id provided
+        '404':
+          description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
@@ -555,6 +567,10 @@ paths:
           description: Invalid query/path param provided
         '401':
           description: Erroneous pair of API key and Partner Id provided
+        '404':
+          description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
@@ -596,6 +612,8 @@ paths:
           description: Invalid query/path/body param provided
         '404':
           description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
@@ -634,6 +652,8 @@ paths:
           description: Invalid query/path/body param provided
         '404':
           description: Resource not found. There is no such combination of the activity id and participant data
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
