@@ -473,6 +473,45 @@ paths:
         - api_key: []
         - partner_id: []
 
+  /activities/{activity_id}/metadata:
+    put:
+      tags:
+        - Activities
+      summary: Replace the metadata for the collection corresponding to the given activity id
+      description: "Replace (i.e., puts) metadata of a minted compressed collection with a new one passed in the body param. The me can only be update for collection bined to an activity. Note: 1) this endpoint does not update items metadata even if it's the same as in collection 2) changes may take a while since the collection data might be cached."
+      operationId: putCollectionMetadata
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1101
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionMetadata'
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '500':
+          description: Internal server error
+
   /activities/{activity_id}/rewards/{participant_id}:
     get:
       tags:
