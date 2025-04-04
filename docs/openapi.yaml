@@ -441,6 +441,37 @@ paths:
       security:
         - api_key: []
         - partner_id: []
+    delete:
+      tags:
+        - Activities
+      summary: Deletes an activity
+      description: An endpoint that allows to delete an activity only if a corresponding compressed collection has not been minted yet
+      operationId: deleteEvent
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity to be deleted
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 1101
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccess'
+        '400':
+          description: Invalid query/path/body param provided
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+      security:
+        - api_key: []
+        - partner_id: []
 
   /activities/{activity_id}/rewards/{participant_id}:
     get:
