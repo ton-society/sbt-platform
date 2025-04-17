@@ -657,6 +657,51 @@ paths:
         '500':
           description: Internal server error
 
+  /activity-groups/{activity_group_slug}/activities/addresses:
+    get:
+      tags:
+        - Activities
+      summary: Finds a paginated list of activities (represented by its slug) and corresponding collection addresses
+      operationId: getActivityCollectionAddresses
+      parameters:
+        - name: activity_group_slug
+          in: path
+          description: Slug of the activity group category. See the list of activity categories [on the website](https://society.ton.org).
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: build
+        - name: _start
+          in: query
+          description: Paginated list start index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 0
+        - name: _end
+          in: query
+          description: Paginated list end index
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 10
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetActivityCollectionAddressesDTO'
+        '400':
+          description: Invalid query/path/body param provided
+        '404':
+          description: Resource not found. There is no such combination of the activity id and participant data
+        '500':
+          description: Internal server error
+
   /csbts/collections/{address}/v1/items/{index}:
     get:
       tags:
@@ -1856,6 +1901,35 @@ components:
           type: string
         title:
           type: string
+
+    GetActivityCollectionAddressesDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            count:
+              type: integer
+              format: int64
+              example: 103
+            activities:
+              type: array
+              items:
+                type: object
+                properties:
+                  activity_slug:
+                    type: string
+                    example: hack-ton-berfest-2022
+                  raw_collection_address:
+                    type: string
+                    example: 0:9c547f425fa40acd60fe41bcbaf1a4e69a7ad5499a1c9ed0c0c26e2d1b90c952
 
     SuccessGetActivityResponseDTO:
       type: object
