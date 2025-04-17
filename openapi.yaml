@@ -578,7 +578,7 @@ paths:
     get:
       tags:
         - Activities
-      summary: Fetch a unique reward link
+      summary: Fetches a unique reward link
       description: Returns a unique reward link using participant's wallet friendly address or Telegram user id. Activity participants can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
       operationId: findRewardLink
       parameters:
@@ -621,7 +621,7 @@ paths:
     get:
       tags:
         - Activities
-      summary: Fetch status of a unique reward link
+      summary: Fetches status of a unique reward link
       description: Returns status of a unique reward link using participant's wallet friendly address or Telegram user id. Activity participants can [connect a wallet](https://docs.ton.org/develop/dapps/ton-connect/overview) before they start participating in the activity. In case of Telegram Mini App, simply use [window.Telegram.WebApp.initData.user.id](https://www.tapps.center/docs/packages/tma-js-init-data/user).
       operationId: getParticipantRewardStatus
       parameters:
@@ -706,7 +706,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: Fetch item data and the proor cell
+      summary: Fetches item data and the proor cell
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex)
       operationId: findCsmtItem
       parameters:
@@ -744,7 +744,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: Fetch list of items in the slice given its offset and count
+      summary: Fetches list of items in the slice given its offset and count
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#2-itemsoffsetoffsetcountcount)
       operationId: findCsbtItems
       parameters:
@@ -790,7 +790,7 @@ paths:
     get:
       tags:
         - Compressed SBTs
-      summary: Fetch the state of a compressed SBT collection
+      summary: Fetches the state of a compressed SBT collection
       description: The endpoint follows specifications outlined in the ["Compressed NFT Standard"](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#3-state)
       operationId: findCsbtCollectionState
       parameters:
@@ -820,7 +820,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Add telegram ids to allowlist
+      summary: Adds telegram ids to allowlist
       description: Upload a single column csv containing telegram ids to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward. In case of existing pair of `activity_id` and `telegram_id` (from the .csv), an error is thrown. The file limit is 21 MB. Maximum number of rows is 350000.
       operationId: creatTelegramUserIdAllowlistEntries
       parameters:
@@ -871,7 +871,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Add a single telegram id to allowlist
+      summary: Adds a single telegram id to allowlist
       description: Create a telegram id entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward.
       operationId: createTelegramUserIdAllowlistEntry
       parameters:
@@ -923,7 +923,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Add a single github user id to allowlist
+      summary: Adds a single github user id to allowlist
       description: Create a github id entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward.
       operationId: createGithubUserIdAllowlistEntry
       parameters:
@@ -975,7 +975,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Add wallet addresses to allowlist
+      summary: Adds wallet addresses to allowlist
       description: Upload a single column csv containing friendly wallet addresses to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward. In case of existing pair of `activity_id` and `friendly_owner_address` (from the .csv), an error is thrown. The file limit is 21 MB. Maximum number of rows is 350000.
       operationId: createWalletAllowlistEntries
       parameters:
@@ -1025,7 +1025,7 @@ paths:
     post:
       tags:
         - Allowlists
-      summary: Add a single wallet address to allowlist
+      summary: Adds a single wallet address to allowlist
       description: Create a wallet address entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity particiapnts, only particiapnts from allowlist can claim the reward.
       operationId: createWalletAllowlistEntry
       parameters:
