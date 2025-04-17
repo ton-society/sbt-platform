@@ -862,10 +862,12 @@ paths:
           description: Not enough permissions to access the requested resource
         '404':
           description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
-  /activities/{activity_id}/allowlist/telegram-ids/{telegram_id}:
+  /activities/{activity_id}/allowlist/telegram-ids/{telegram_user_id}:
     post:
       tags:
         - Allowlists
@@ -881,7 +883,7 @@ paths:
           schema:
             type: integer
             default: 1229
-        - name: telegram_id
+        - name: telegram_user_id
           in: path
           description: Claimie telegram user id
           required: true
@@ -908,6 +910,64 @@ paths:
           description: Invalid query/path param provided
         '401':
           description: Erroneous pair of API key and Partner Id provided
+        '403':
+          description: Not enough permissions to access the requested resource
+        '404':
+          description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
+        '500':
+          description: Internal server error
+
+  /activities/{activity_id}/allowlist/github-ids/{github_user_id}:
+    post:
+      tags:
+        - Allowlists
+      summary: Add a single github user id to allowlist
+      description: Create a github id entry to be added to the activity reward allowlist. Note that activity should be published. Endpoint returns a reward link url to be distrubuted to the activity participants, only participants from allowlist can claim the reward.
+      operationId: createGithubUserIdAllowlistEntry
+      parameters:
+        - name: activity_id
+          in: path
+          description: Activity id
+          required: true
+          explode: true
+          schema:
+            type: integer
+            default: 729
+        - name: github_user_id
+          in: path
+          description: Claimie github user id
+          required: true
+          schema:
+            type: integer
+            default: 2605890176
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemMetadataJson'
+      security:
+        - api_key: []
+        - partner_id: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessRewardLink'
+        '400':
+          description: Invalid query/path param provided
+        '401':
+          description: Erroneous pair of API key and Partner Id provided
+        '403':
+          description: Not enough permissions to access the requested resource
+        '404':
+          description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
@@ -956,6 +1016,8 @@ paths:
           description: Not enough permissions to access the requested resource
         '404':
           description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
@@ -1002,6 +1064,12 @@ paths:
           description: Invalid query/path param provided
         '401':
           description: Erroneous pair of API key and Partner Id provided
+        '403':
+          description: Not enough permissions to access the requested resource
+        '404':
+          description: Resource not found
+        '429':
+          description: Rate limit exceeded. See "Retry-After", "X-RateLimit-Limit", "X-RateLimit-Remaining", and "X-RateLimit-Reset" headers in the response
         '500':
           description: Internal server error
 
