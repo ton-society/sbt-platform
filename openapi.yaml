@@ -4,7 +4,7 @@ info:
   description: Public API specification
   version: 1.0.0
 servers:
-  - url: https://society.ton.org/v1
+  - url: https://id.ton.org/v1
 tags:
   - name: Infra
     description: Infastructure endpoints
@@ -258,7 +258,7 @@ paths:
       tags:
         - Activities
       summary: Creates a new activity
-      description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://society.ton.org/activities/active). Newly created activity is posted on the website and is available by its slug (use GET /activities/{activity_id} request to find the activity slug) but might not be present in the catalouge. In order to appear under one of the activity categories, the activity needs to go through additional moderation. 
+      description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://id.ton.org/activities/active). Newly created activity is posted on the website and is available by its slug (use GET /activities/{activity_id} request to find the activity slug) but might not be present in the catalouge. In order to appear under one of the activity categories, the activity needs to go through additional moderation. 
       operationId: createEvent
       requestBody:
         required: true
@@ -282,7 +282,7 @@ paths:
                   example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥\nIt’s going to be hot and exciting!"
                 hub_id:
                   type: integer
-                  description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://society.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
+                  description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://id.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
                   example: 1
                 additional_info:
                   type: string
@@ -372,7 +372,7 @@ paths:
       tags:
         - Activities
       summary: Updates an activity
-      description: An endpoint that allows to update an activity of the "Events" activity group. See [ton-society events page](https://society.ton.org/activities/events).
+      description: An endpoint that allows to update an activity of the "Events" activity group. See [ton-society events page](https://id.ton.org/activities/events).
       operationId: updateEvent
       parameters:
         - name: activity_id
@@ -404,7 +404,7 @@ paths:
                   example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥\nIt’s going to be hot and exciting!"
                 hub_id:
                   type: integer
-                  description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://society.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
+                  description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://id.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
                   example: 1
                 additional_info:
                   type: string
@@ -666,7 +666,7 @@ paths:
       parameters:
         - name: activity_group_slug
           in: path
-          description: Slug of the activity group category. See the list of activity categories [on the website](https://society.ton.org).
+          description: Slug of the activity group category. See the list of activity categories [on the website](https://id.ton.org).
           required: true
           explode: true
           schema:
@@ -1382,8 +1382,8 @@ components:
               example: 239
             activity_url:
               type: string
-              description: Unique society.ton.org url of the newly created activity (the value might change after moderation)
-              example: https://society.ton.org/open-league-summer-taipei-bootcamp
+              description: Unique id.ton.org url of the newly created activity (the value might change after moderation)
+              example: https://id.ton.org/open-league-summer-taipei-bootcamp
 
     EmptySuccess:
       type: object
@@ -1521,7 +1521,7 @@ components:
             properties:
               uri:
                 type: string
-                example: https://society.ton.org/welcome
+                example: https://id.ton.org/welcome
               label:
                 type: string
                 example: 'View on TON Society'
@@ -1593,7 +1593,7 @@ components:
           properties:
             reward_link:
               type: string
-              example: https://society.ton.org/welcome/52528543-df85-4529-afbd-07ac7c48187d
+              example: https://id.ton.org/welcome/52528543-df85-4529-afbd-07ac7c48187d
 
     RewardsExistingCollection:
       type: object
@@ -1794,8 +1794,8 @@ components:
                 Possible values:
                 - `NOT_CLAIMED`: The reward has not been claimed by the participant.
                 - `CLAIMED`: The reward has been claimed by the participant.
-                - `MINTED`: The reward has been minted on the society.ton.org side.
-                - `RECEIVED`: The reward has been received by the participant and visible in the society.ton.org profile.
+                - `MINTED`: The reward has been minted on the id.ton.org side.
+                - `RECEIVED`: The reward has been received by the participant and visible in the id.ton.org profile.
               example: NOT_CLAIMED
               enum:
                 - NOT_CLAIMED
