@@ -4,9 +4,8 @@
 - helps projects attract more users
 - enables users to receive additional badges across the ecosystems, meet and compete
 
-[Learn more](https://eco.ton.org/en/opportunities/make-sbt-campaign)
 
-## Steps for direct integration
+## Steps for integration
 ### 1. Register an activity
 1. Contact us to receive your project's ```partner_id``` and ```api_key```, which provides access to the API and endpoints to issue cSTBs.
 2. [Register your activity via API](https://ton-society.readme.io/reference/createevent). Use generated ```activity_id``` in other endpoints.
@@ -33,3 +32,6 @@ Provides access to publicly available information on society.ton.org regarding r
 
 **[cSBT data](https://ton-society.readme.io/reference/findcsmtitem)**<br />
 Provides access to cSBT collections minted via TON Society in your project. This information complies with the [Compressed SBT Standard](https://github.com/krigga/TEPs/blob/compressed-nfts/text/0000-compressed-nft-standard.md#1-itemsindex).
+
+**[oAuth requests](https://github.com/ton-society/sbt-platform/blob/main/oauth.md)**<br />
+Allows apps to get users profile data and badge info via oAuth.
