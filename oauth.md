@@ -50,13 +50,11 @@ Redirect the user to: `https://id.ton.org/v1/oauth2/signin` with the following q
 
 > Since we’re using PKCE, no client_secret is required during the authorization or token exchange process. The code challenge and code verifier ensure the integrity of the request instead.
 
-After redirect to ⁠https://id.ton.org/v1/oauth2/signin, the user will be automatically redirected to the [TON ID Mini App](https://t.me/id_app) in Telegram for authorization:
+After redirect to ⁠https://id.ton.org/v1/oauth2/signin, the user will be automatically redirected to the [TON ID Mini App](https://t.me/id_app) in Telegram for authorization. User approves requested scopes in the Mini App, and get redirected to the ```redirect_uri``` callback.
 
-<img width="390" alt="Data request" src="https://github.com/user-attachments/assets/33693260-c78a-4d04-a1cc-f466f7469807" />
+<img width="390" alt="Data request" src="https://github.com/user-attachments/assets/33693260-c78a-4d04-a1cc-f466f7469807" />   <img width="390" alt="Requested scope approved" src="https://github.com/user-attachments/assets/e723311f-6663-484b-bc4f-ed0c4bcdaee7" />
 
-User approves requested scopes in the Mini App, and get redirected to the ```redirect_uri``` callback:
 
-<img width="390" alt="Requested scope approved" src="https://github.com/user-attachments/assets/e723311f-6663-484b-bc4f-ed0c4bcdaee7" />
 
 
 ### 3. Handle Redirect and Extract Code
