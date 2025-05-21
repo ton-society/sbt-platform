@@ -1,5 +1,9 @@
 ## TON ID OIDC and OAuth 2.0 Integration Guide
-This guide explains how to integrate with TON ID using OAuth 2.0 Authorization Code Flow with PKCE, requesting user identity and refresh capability. [PKCE Flow demo](https://www.oauth.com/playground/authorization-code-with-pkce.html)
+TON ID allows apps to get users profile data and badge info via oAuth.
+
+This guide explains how to integrate with TON ID using OAuth 2.0 Authorization Code Flow with PKCE, requesting user identity and refresh capability. [PKCE Flow demo](https://www.oauth.com/playground/authorization-code-with-pkce.html).
+
+To obtain ```CLIENT_ID``` for your app please [contact us at Telegram](https://t.me/boldov).
 
 ## OAuth Flow Overview
 
@@ -46,9 +50,14 @@ Redirect the user to: `https://id.ton.org/v1/oauth2/signin` with the following q
 
 > Since we’re using PKCE, no client_secret is required during the authorization or token exchange process. The code challenge and code verifier ensure the integrity of the request instead.
 
-After redirect to ⁠https://id.ton.org/v1/oauth2/signin, the user will be automatically redirected to the [TON ID mini-app](https://t.me/id_app) in Telegram for authorization.
+After redirect to ⁠https://id.ton.org/v1/oauth2/signin, the user will be automatically redirected to the [TON ID Mini App](https://t.me/id_app) in Telegram for authorization:
 
-User approves requested scopes in the mini-app, and get redirected to the ```redirect_uri``` callback.
+<img width="390" alt="Data request" src="https://github.com/user-attachments/assets/33693260-c78a-4d04-a1cc-f466f7469807" />
+
+User approves requested scopes in the Mini App, and get redirected to the ```redirect_uri``` callback:
+
+<img width="390" alt="Requested scope approved" src="https://github.com/user-attachments/assets/e723311f-6663-484b-bc4f-ed0c4bcdaee7" />
+
 
 ### 3. Handle Redirect and Extract Code
 
@@ -174,6 +183,18 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=refresh_token
 refresh_token=YOUR_REFRESH_TOKEN
 client_id=YOUR_CLIENT_ID
+```
+
+Response:
+```
+{
+  "access_token": "ACCESS_TOKEN",
+  "id_token": "ID_TOKEN",
+  "refresh_token": "REFRESH_TOKEN",
+  "scope": "requested scopes",
+  "expires_in": 3600,
+  "token_type": "bearer"
+}
 ```
 
 
