@@ -156,10 +156,8 @@ Example of the response:
 {
     "status": "success",
     "data": {
-        "name": "Alex",
-        "picture": "https://demo.app/alex-avatar.png",
-        "sub": "111-222-333", //user id
-        "telegram_id": 12345678
+        "friendly_wallet_address": "UQAw0Zxb55PR2HtfD793UTXggGNNZJcTKh3bh4u4X-nMWMAz",
+        "raw_wallet_address": "0:30d19c5be793d1d87b5f0fbf775135e080634d6497132a1ddb878bb85fe9cc58"
     }
 }
 ```
