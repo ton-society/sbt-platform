@@ -138,6 +138,10 @@ Example of the response:
         "picture": "https://demo.app/alex-avatar.png",
         "sub": "111-222-333", //user id
         "telegram_id": 12345678
+         "socials": {
+            "twitter": true,
+            "youtube": false
+        }
     }
 }
 ```
