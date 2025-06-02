@@ -1,14 +1,17 @@
 ## TON ID OIDC and OAuth 2.0 Integration Guide
+
 TON ID allows apps to get users profile data and badge info via oAuth.
 
 This guide explains how to integrate with TON ID using OAuth 2.0 Authorization Code Flow with PKCE, requesting user identity and refresh capability. [PKCE Flow demo](https://www.oauth.com/playground/authorization-code-with-pkce.html).
 
-To obtain ```CLIENT_ID``` for your app please [contact us at Telegram](https://t.me/boldov).
+To obtain `CLIENT_ID` for your app please [contact us at Telegram](https://t.me/boldov).
 
 ## OAuth Flow Overview
 
 ### 1. Generate PKCE Values
+
 Generate a **code verifier** and **code challenge**:
+
 - `code_verifier` = random string (43–128 characters)
 - `code_challenge` = base64url(SHA256(code_verifier))
 
@@ -39,7 +42,9 @@ function base64URLEncode(buffer: Uint8Array): string {
 ```
 
 ### 2. Redirect User to Authorization Endpoint
+
 Redirect the user to: `https://id.ton.org/v1/oauth2/signin` with the following query parameters:
+
 - `response_type=code`
 - `client_id=YOUR_CLIENT_ID`
 - `redirect_uri=https://yourapp.com/callback`
@@ -48,14 +53,38 @@ Redirect the user to: `https://id.ton.org/v1/oauth2/signin` with the following q
 - `code_challenge=base64url(sha256(code_verifier))`
 - `code_challenge_method=S256`
 
-> Since we’re using PKCE, no client_secret is required during the authorization or token exchange process. The code challenge and code verifier ensure the integrity of the request instead.
+> Since we're using PKCE, no client_secret is required during the authorization or token exchange process. The code challenge and code verifier ensure the integrity of the request instead.
 
-After redirect to ⁠https://id.ton.org/v1/oauth2/signin, the user will be automatically redirected to the [TON ID Mini App](https://t.me/id_app) in Telegram for authorization. User approves requested scopes in the Mini App, and get redirected to the ```redirect_uri``` callback.
+After redirect to ⁠https://id.ton.org/v1/oauth2/signin, the user will be automatically redirected to the [TON ID Mini App](https://t.me/id_app) in Telegram for authorization. User approves requested scopes in the Mini App, and get redirected to the `redirect_uri` callback.
 
-<img width="390" alt="Data request" src="https://github.com/user-attachments/assets/33693260-c78a-4d04-a1cc-f466f7469807" />   <img width="390" alt="Requested scope approved" src="https://github.com/user-attachments/assets/e723311f-6663-484b-bc4f-ed0c4bcdaee7" />
+#### Alternative: JSON Format for Mini-App Integration
 
+If you're integrating from within another mini-app and want to avoid breaking out to the browser, you can use the `response_format=json` parameter. This returns a JSON response with a direct URL to the TON ID mini-app instead of performing a redirect.
 
+Add the following parameter to your signin request:
 
+- `response_format=json`
+
+Example request:
+
+```
+GET https://id.ton.org/v1/oauth2/signin?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=https://yourapp.com/callback&scope=openid+profile+offline_access&state=RANDOM_CSRF_STRING&code_challenge=CODE_CHALLENGE&code_challenge_method=S256&response_format=json
+```
+
+Response:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "url": "https://t.me/id_app/start?startapp=..."
+  }
+}
+```
+
+Where `url` is the direct URL to the TON ID mini-app. This allows you to open the TON ID mini-app from within your own mini-app without breaking out to the browser for redirect.
+
+<img width="390" alt="Data request" src="https://github.com/user-attachments/assets/33693260-c78a-4d04-a1cc-f466f7469807" /> <img width="390" alt="Requested scope approved" src="https://github.com/user-attachments/assets/e723311f-6663-484b-bc4f-ed0c4bcdaee7" />
 
 ### 3. Handle Redirect and Extract Code
 
@@ -68,7 +97,9 @@ Extract:
 - `scope` (optional, informational only)
 
 ### 4. Exchange Code for Tokens
+
 POST to the token endpoint:
+
 ```
 POST https://id.ton.org/v1/oauth2/token
 Content-Type: application/x-www-form-urlencoded
@@ -79,8 +110,10 @@ redirect_uri=https://yourapp.com/callback
 client_id=YOUR_CLIENT_ID
 code_verifier=YOUR_CODE_VERIFIER
 ```
+
 ​
 Response will contain:
+
 ```
 {
   "access_token": "ACCESS_TOKEN",
@@ -93,10 +126,13 @@ Response will contain:
 ```
 
 ## Supported scopes
-### openid 
+
+### openid
+
 This scope facilitates sign-in with TON ID using the OpenID Connect standard, allowing the application to authenticate users and obtain an ID token. The ID token is a JWT, signed with the server's private key:
 
-Example of token response for ```openid``` scope:
+Example of token response for `openid` scope:
+
 ```
 {
   "access_token": "ory_at_iRhbwqGqRlM48nxEPMkOPvMy8dSN9PGyg14o_L63g54.ze9bq15DaMd7RxnwEDpWK9goKeVhH1wCLgqFIENh_mA",
@@ -106,7 +142,9 @@ Example of token response for ```openid``` scope:
   "token_type": "bearer"
 }
 ```
+
 ​ID Token JWT decoded:
+
 ```
 {
   "at_hash": "fiOAkDVrB1gnV_Rb5UR3_Q",
@@ -120,16 +158,20 @@ Example of token response for ```openid``` scope:
   "sub": "111-222-333" //Unique identifier of the user
 }
 ```
+
 ### profile
-Requests access to basic profile information, such as ```name```, ```picture``` and ```telegram_id```.
+
+Requests access to basic profile information, such as `name`, `picture` and `telegram_id`.
 
 Request:
+
 ```
 GET https://id.ton.org/v1/oauth2/userinfo
 Authorization: Bearer access_token
 ```
 
 Example of the response:
+
 ```
 {
     "status": "success",
@@ -145,17 +187,21 @@ Example of the response:
     }
 }
 ```
-If requested along with ```openid``` scope, those fields are also populated within ID token.
+
+If requested along with `openid` scope, those fields are also populated within ID token.
 
 ### wallet
+
 Allows to ask the user to share a wallet address linked to their TON ID during the authorization flow.
 
 Request:
+
 ```
 GET https://id.ton.org/v1/wallet
 ```
 
 Example of the response:
+
 ```
 {
     "status": "success",
@@ -169,13 +215,15 @@ Example of the response:
 > **Sharing is optional**
 >
 > The user may choose to **skip** sharing their wallet address.
-> If the wallet address is not shared, the `⁠/v1/wallet` endpoint will return a 
+> If the wallet address is not shared, the `⁠/v1/wallet` endpoint will return a
 > `⁠404 Not Found` error.
 
 ### offline_access
+
 Requests a refresh token so your app can obtain new access tokens without user interaction.
 
 Request:
+
 ```
 POST https://id.ton.org/v1/oauth2/token
 Content-Type: application/x-www-form-urlencoded
@@ -186,6 +234,7 @@ client_id=YOUR_CLIENT_ID
 ```
 
 Response:
+
 ```
 {
   "access_token": "ACCESS_TOKEN",
@@ -196,7 +245,6 @@ Response:
   "token_type": "bearer"
 }
 ```
-
 
 ## OAuth Discovery Info
 
@@ -214,6 +262,7 @@ Response:
 ## NextAuth Provider Config
 
 If you're using **`NextAuth.js`**, here's an example provider configuration for TON ID:
+
 ```
 export const TONIDProvider: OAuthConfig<any> = {
   id: 'tonid',
