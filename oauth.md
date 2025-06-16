@@ -246,6 +246,41 @@ Response:
 }
 ```
 
+### badge.verify.<collection_address>
+
+Allows your app to verify if a user holds a badge from a specific collection registered in TON ID. The `<collection_address>` should be the friendly format of the collection address registered for a specific activity in TON ID.
+
+**Example scope:**
+
+```
+scope=badge.verify.EQBx6QQxnmurxf-cw58Vj6kaQdlFUrN72zh2EGfN28ftx6in
+```
+
+Replace `EQBx6QQxnmurxf-cw58Vj6kaQdlFUrN72zh2EGfN28ftx6in` with your collection's friendly address.
+
+#### Badge Verification Endpoint
+
+To verify if a user holds a badge from a specific collection, make a request to:
+
+```
+GET https://id.ton.org/v1/badge/:collectionAddress/verify
+Authorization: Bearer access_token
+```
+
+Where `:collectionAddress` is the friendly address of the badge collection.
+
+**Response Example:**
+
+```
+{
+    "status": "success",
+    "data": {
+        "hasBadge": true,
+        "collection_address": "EQBx6QQxnmurxf-cw58Vj6kaQdlFUrN72zh2EGfN28ftx6in"
+    }
+}
+```
+
 ## OAuth Discovery Info
 
 - Issuer: https://id.ton.org
