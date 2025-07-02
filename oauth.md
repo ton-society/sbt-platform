@@ -84,6 +84,23 @@ Response:
 
 Where `url` is the direct URL to the TON ID mini-app. This allows you to open the TON ID mini-app from within your own mini-app without breaking out to the browser for redirect.
 
+#### Return to your mini-app with `redirect_tma`
+
+For a seamless mini-app to mini-app experience, you can use the `redirect_tma` parameter. This option is designed for scenarios where you want to redirect users directly from TON ID mini-app to another mini-app after authorization, without going through a web browser redirect.
+
+When using `redirect_tma`, add the following parameter to your signin request:
+
+- `redirect_tma=https://t.me/your_mini_app...`
+
+**How it works:**
+
+1. User authorizes the requested scopes in the TON ID Mini App
+2. Instead of redirecting to `redirect_uri` with authorization code and state, TON ID sends a GET request to the specified `redirect_uri` with the same parameters (code, state, scope)
+3. If the response returns HTTP 200, TON ID redirects the user from the mini-app directly to the `redirect_tma` link
+4. This creates a seamless transition between mini-apps without breaking the user experience
+
+This flow is particularly useful when integrating TON ID authentication within Telegram mini-apps where you want to maintain the native mini-app experience.
+
 <img width="390" alt="Data request" src="https://github.com/user-attachments/assets/33693260-c78a-4d04-a1cc-f466f7469807" /> <img width="390" alt="Requested scope approved" src="https://github.com/user-attachments/assets/e723311f-6663-484b-bc4f-ed0c4bcdaee7" />
 
 ### 3. Handle Redirect and Extract Code
@@ -293,6 +310,23 @@ Where `:collectionAddress` is the friendly address of the badge collection.
 
 - PKCE (`code_challenge`) and `state` are **required**.
 - `refresh_token` is only returned if `offline_access` scope is granted and your client allows it.
+
+## Testing and Debug Tools
+
+### OAuth Debug Web App
+
+For testing different scopes and OAuth scenarios, you can use the debug web app:
+
+**URL:** https://ton-id-oauth-debug.globalsociety.cc/
+
+**Test Client ID:** `debug`
+
+This debug tool allows you to:
+
+- Test various OAuth flows and scopes
+- Experiment with different parameters including `redirect_tma` and `response_format=json`
+- Debug authorization and token exchange processes
+- Validate your integration before deploying to production
 
 ## NextAuth Provider Config
 
