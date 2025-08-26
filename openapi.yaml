@@ -481,6 +481,44 @@ paths:
         - api_key: []
         - partner_id: []
 
+  /activities/{activity_id}/csbt/owners/{raw_owner_address}:
+    get:
+      tags:
+        - Activities
+      summary: Fetch cSBT data for a specified activity and raw owner address
+      description: Returns cSBT data for a given activity and raw owner address. Support both minted and pending items.
+      operationId: findCsbtOwnerData
+      parameters:
+        - name: activity_id
+          in: path
+          description: Id of the activity, for wich the participant was rewarded
+          required: true
+          explode: true
+          schema:
+            type: number
+            default: 14
+        - name: raw_owner_address
+          in: path
+          description: Item's raw owner address
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: 0:C290189A787E15FBA30142A3250B70F3019F8C8553E9A5E1BAF65723AA3C6C47
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessCsbtOwnerData'
+        '400':
+          description: Invalid query/path/body param provided
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+
   /activities/{activity_id}/metadata:
     put:
       tags:
@@ -1577,6 +1615,23 @@ components:
               value:
                 type: string
                 example: TON Society Asia
+
+    SuccessCsbtOwnerData:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+            - success
+            - error
+            - fail
+        data:
+          type: object
+          properties:
+            has_sbt: boolean
+            content_json:
+              type: object
 
     SuccessRewardLink:
       type: object
