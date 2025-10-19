@@ -1629,7 +1629,8 @@ components:
         data:
           type: object
           properties:
-            has_sbt: boolean
+            has_sbt:
+              type: boolean
             content_json:
               type: object
 
