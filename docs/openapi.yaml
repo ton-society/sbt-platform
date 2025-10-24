@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: TON Society API
+  title: TON ID API
   description: Public API specification
   version: 1.0.0
 servers:
@@ -258,7 +258,7 @@ paths:
       tags:
         - Activities
       summary: Creates a new activity
-      description: An endpoint that allows to create a new activity. See [ton-society events catalouge](https://id.ton.org/activities/active). Newly created activity is posted on the website and is available by its slug (use GET /activities/{activity_id} request to find the activity slug) but might not be present in the catalouge. In order to appear under one of the activity categories, the activity needs to go through additional moderation. 
+      description: An endpoint that allows to create a new activity. See [TON ID events catalogue](https://id.ton.org/activities/active). Newly created activity is posted on the website and is available by its slug (use GET /activities/{activity_id} request to find the activity slug) but might not be present in the catalogue. In order to appear under one of the activity categories, the activity needs to go through additional moderation. 
       operationId: createEvent
       requestBody:
         required: true
@@ -323,7 +323,7 @@ paths:
       tags:
         - Activities
       summary: Updates an activity
-      description: An endpoint that allows to update an activity of the "Events" activity group. See [ton-society events page](https://id.ton.org/activities/events).
+      description: An endpoint that allows to update an activity of the "Events" activity group. See [TON ID events page](https://id.ton.org/activities/events).
       operationId: updateEvent
       parameters:
         - name: activity_id
@@ -355,7 +355,7 @@ paths:
                   example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥\nIt’s going to be hot and exciting!"
                 hub_id:
                   type: integer
-                  description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://id.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
+                  description: Id of the corresponding TON hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://id.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
                   example: 1
                 additional_info:
                   type: string
@@ -1176,7 +1176,7 @@ components:
             image: "https://storage.googleapis.com/tonsociety/596c2c53-deb2-4afd-9318-3d01238ce7c0.png"
             attributes:
               - trait_type: "Organizer"
-                value: "TON Society"
+                value: "TON ID"
               - trait_type: "Activity Type"
                 value: "Hackathon"
         created_at:
@@ -1265,7 +1265,7 @@ components:
             image: "https://storage.googleapis.com/tonsociety/596c2c53-deb2-4afd-9318-3d01238ce7c0.png"
             attributes:
               - trait_type: "Organizer"
-                value: "TON Society"
+                value: "TON ID"
         created_at:
           type: integer
           format: int64
@@ -1384,7 +1384,7 @@ components:
               example: https://t.me/tonsociety_chat
             description:
               type: string
-              example: Global TON Society community hub
+              example: Global TON community hub
             image:
               type: string
               example: https://storage.googleapis.com/tonsociety/hub-global.png
@@ -1538,7 +1538,7 @@ components:
                 example: Organizer
               value:
                 type: string
-                example: TON Society Asia
+                example: TON Asia
         item_metadata:
           $ref: '#/components/schemas/ItemMetadataJson'
 
@@ -1576,11 +1576,11 @@ components:
                 example: https://id.ton.org/welcome
               label:
                 type: string
-                example: 'View on TON Society'
+                example: 'View on TON ID'
         organizer:
           description: Organizer category
           type: string
-          example: TON Society Asia
+          example: TON Asia
         original_activity_url:
           description: Address used to complete the activity
           type: string
@@ -1628,7 +1628,7 @@ components:
                 example: Organizer
               value:
                 type: string
-                example: TON Society Asia
+                example: TON Asia
         telegram_id:
           description: Telegram user ID associated with the SBT
           type: integer
@@ -1798,7 +1798,7 @@ components:
                   label:
                     type: string
                     description: Label of the collection item button
-                    example: Open in TON Society
+                    example: Open in TON ID
             activity_type:
               type: string
               description: Type of the activity
@@ -1842,7 +1842,7 @@ components:
             user_data:
               type: string
               description: Any additional data provided by user when completing an activity
-              example: TON Society Taipei
+              example: TON Taipei
             attributes:
               type: array
               description: Attributes that will be displayed for SBT on marketplaces and at user wallets
@@ -2262,7 +2262,7 @@ components:
           example: "Organizer"
         value:
           type: string
-          example: "TON Society Asia"
+          example: "TON Asia"
 
     StrapiBadgeReceivalButtonAttributes:
       type: object
@@ -2422,7 +2422,7 @@ components:
           example: "Open League Summer: Taipei Bootcamp"
         organizer:
           type: string
-          example: "TON Society Asia"
+          example: "TON Asia"
         original_activity_url:
           type: string
           example: "https://lu.ma/9ovl6qeq"
@@ -2446,7 +2446,7 @@ components:
       properties:
         label:
           type: string
-          example: "View on TON Society"
+          example: "View on TON ID"
         uri:
           type: string
           example: "https://id.ton.org/welcome"
@@ -2538,7 +2538,7 @@ components:
           example: 1000
         name:
           type: string
-          example: "TON Society Asia"
+          example: "TON Asia"
 
     StrapiPlace:
       type: object
