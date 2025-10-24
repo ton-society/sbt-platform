@@ -265,56 +265,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required: [title, subtitle, description, hub_id]
-              properties:
-                title:
-                  type: string
-                  description: The activity title
-                  example: 'Open League Summer: Taipei Bootcamp'
-                subtitle:
-                  type: string
-                  description: The activity subtitle
-                  example: '$2,000,000 in prizes and 13 IRL Bootcamps!'
-                description:
-                  type: string
-                  description: The activity description
-                  example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥\nIt’s going to be hot and exciting!"
-                hub_id:
-                  type: integer
-                  description: Id of the corresponding ton-society hub of the activity (e.g., CIS, Global, etc.). Use [/hubs](https://id.ton.org/v1/hubs?_start=0&_end=3) endpoint to retrieve the list of hubs.
-                  example: 1
-                additional_info:
-                  type: string
-                  description: The activity additional information
-                  example: 'Taipei, Taiwan'
-                start_date:
-                  type: string
-                  description: The start date of the activity in the appropriate format
-                  example: '2024-12-16'
-                end_date:
-                  type: string
-                  description: The end date of the activity in the appropriate format
-                  example: '2025-12-31'
-                cta_button:
-                  type: object
-                  required: [label, link]
-                  properties:
-                    label:
-                      type: string
-                      description: Label shown on the CTA button
-                      example: 'Event details'
-                    link:
-                      type: string
-                      description: External link opened when the CTA button is clicked
-                      example: https://lu.ma/3mx6a7l7
-                rewards:
-                  type: object
-                  required: [mint_type]
-                  oneOf:
-                    - $ref: '#/components/schemas/RewardsManualMint'
-                    - $ref: '#/components/schemas/RewardsExistingCollection'
-                    - $ref: '#/components/schemas/RewardsHubBased'
+              $ref: '#/components/schemas/CreateActivityDTO'
       responses:
         '200':
           description: Successful operation
@@ -1145,6 +1096,19 @@ components:
           type: string
           format: url
           example: https://storage.googleapis.com/ton-strapi/Avatar_1321317640_92f4adfc3f/Avatar_1321317640_92f4adfc3f.png
+        is_name_changed:
+          type: boolean
+          example: false
+        is_telegram_verified:
+          type: boolean
+          example: true
+        telegram_id:
+          type: integer
+          format: int64
+          example: 123456789
+        wallet_address:
+          type: string
+          example: UQD0NThTbnfyouCHC9bLmtCD6vuMwKZ75EzVs2u0DELBFSzS
     SuccessPublicUser:
       type: object
       properties:
@@ -1194,6 +1158,7 @@ components:
           example: 21
         content_uri:
           type: string
+          example: https://storage.googleapis.com/tonsociety/596c2c53-deb2-4afd-9318-3d01238ce7c0.json
         name:
           type: string
           example: TON Bounty #305
@@ -1205,6 +1170,15 @@ components:
           example: https://storage.googleapis.com/tonsociety/596c2c53-deb2-4afd-9318-3d01238ce7c0.png
         content_json:
           type: object
+          example:
+            name: "TON Bounty #305"
+            description: "Reward for valuable TON Ecosystem contributions"
+            image: "https://storage.googleapis.com/tonsociety/596c2c53-deb2-4afd-9318-3d01238ce7c0.png"
+            attributes:
+              - trait_type: "Organizer"
+                value: "TON Society"
+              - trait_type: "Activity Type"
+                value: "Hackathon"
         created_at:
           type: integer
           format: int64
@@ -1216,6 +1190,16 @@ components:
         sbt_collection_address:
           type: string
           example: EQBAJCGblueX9Nwr84TmrcLmIoPbeunnujBoziT3MtJuaJ0J
+        owner_address:
+          type: string
+          example: UQD0NThTbnfyouCHC9bLmtCD6vuMwKZ75EzVs2u0DELBFSzS
+        is_minted:
+          type: boolean
+          example: true
+        minted_at:
+          type: integer
+          format: int64
+          example: 1711095609
     SuccessSbts:
       type: object
       properties:
@@ -1275,6 +1259,13 @@ components:
           example: https://storage.googleapis.com/tonsociety/596c2c53-deb2-4afd-9318-3d01238ce7c0.png
         content_json:
           type: object
+          example:
+            name: "TON Bounties Contributors"
+            description: "TON Bounties program is an open community initiative"
+            image: "https://storage.googleapis.com/tonsociety/596c2c53-deb2-4afd-9318-3d01238ce7c0.png"
+            attributes:
+              - trait_type: "Organizer"
+                value: "TON Society"
         created_at:
           type: integer
           format: int64
@@ -1287,6 +1278,12 @@ components:
           type: integer
           format: int64
           example: 1
+        is_compressed:
+          type: boolean
+          example: true
+        merkle_root:
+          type: string
+          example: "0x1234567890abcdef1234567890abcdef12345678"
     SuccessCollection:
       type: object
       properties:
@@ -1385,6 +1382,23 @@ components:
             url:
               type: string
               example: https://t.me/tonsociety_chat
+            description:
+              type: string
+              example: Global TON Society community hub
+            image:
+              type: string
+              example: https://storage.googleapis.com/tonsociety/hub-global.png
+            is_active:
+              type: boolean
+              example: true
+            created_at:
+              type: string
+              format: date-time
+              example: "2024-01-01T00:00:00Z"
+            updated_at:
+              type: string
+              format: date-time
+              example: "2024-01-01T00:00:00Z"
 
     SuccessHubs:
       type: object
@@ -1615,6 +1629,20 @@ components:
               value:
                 type: string
                 example: TON Society Asia
+        telegram_id:
+          description: Telegram user ID associated with the SBT
+          type: integer
+          format: int64
+          example: 123456789
+        wallet_address:
+          description: Wallet address of the SBT owner
+          type: string
+          example: UQD0NThTbnfyouCHC9bLmtCD6vuMwKZ75EzVs2u0DELBFSzS
+        github_id:
+          description: GitHub user ID associated with the SBT
+          type: integer
+          format: int64
+          example: 987654321
 
     SuccessCsbtOwnerData:
       type: object
@@ -2003,28 +2031,60 @@ components:
     GetActivityResponseDTO:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
+          example: 106
         additional_info:
           type: string
+          example: "Taipei, Taiwan"
         description:
           type: string
+          example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥"
         end_date:
           type: string
+          example: "2025-12-31"
         join_button:
           $ref: '#/components/schemas/JoinButtonAttributes'
         link:
           type: string
+          example: "https://id.ton.org/open-league-summer-taipei-bootcamp"
         public_path:
           type: string
+          example: "open-league-summer-taipei-bootcamp"
         publishedAt:
           type: string
+          format: date-time
+          example: "2024-12-16T00:00:00Z"
         rewards:
           $ref: '#/components/schemas/RewardsAttributes'
         start_date:
           type: string
+          example: "2024-12-16"
         subtitle:
           type: string
+          example: "$2,000,000 in prizes and 13 IRL Bootcamps!"
         title:
           type: string
+          example: "Open League Summer: Taipei Bootcamp"
+        hub_id:
+          type: integer
+          format: int64
+          example: 1
+        is_published:
+          type: boolean
+          example: true
+        is_active:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-12-16T00:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-12-16T00:00:00Z"
 
     GetActivityCollectionAddressesDTO:
       type: object
@@ -2067,6 +2127,107 @@ components:
             - success
             - error
             - fail
+
+    CreateActivityDTO:
+      type: object
+      required: [title, subtitle, description, hub_id]
+      properties:
+        title:
+          type: string
+          description: The activity title
+          example: 'Open League Summer: Taipei Bootcamp'
+        subtitle:
+          type: string
+          description: The activity subtitle
+          example: '$2,000,000 in prizes and 13 IRL Bootcamps!'
+        description:
+          type: string
+          description: The activity description
+          example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥"
+        hub_id:
+          type: integer
+          description: Id of the corresponding ton-society hub of the activity
+          example: 1
+        additional_info:
+          type: string
+          description: The activity additional information
+          example: 'Taipei, Taiwan'
+        start_date:
+          type: string
+          description: The start date of the activity in the appropriate format
+          example: '2024-12-16'
+        end_date:
+          type: string
+          description: The end date of the activity in the appropriate format
+          example: '2025-12-31'
+        cta_button:
+          type: object
+          properties:
+            label:
+              type: string
+              description: Label shown on the CTA button
+              example: 'Event details'
+            link:
+              type: string
+              description: External link opened when the CTA button is clicked
+              example: https://lu.ma/3mx6a7l7
+        rewards:
+          type: object
+          required: [mint_type]
+          oneOf:
+            - $ref: '#/components/schemas/RewardsManualMint'
+            - $ref: '#/components/schemas/RewardsExistingCollection'
+            - $ref: '#/components/schemas/RewardsHubBased'
+
+    TonProof:
+      type: object
+      properties:
+        address:
+          type: string
+          example: "UQD0NThTbnfyouCHC9bLmtCD6vuMwKZ75EzVs2u0DELBFSzS"
+        domain:
+          type: object
+          properties:
+            lengthBytes:
+              type: integer
+              example: 0
+            value:
+              type: string
+              example: "ton-connect"
+        signature:
+          type: string
+          example: "te6cckEBAQEACAAADDAuanNvbuTiyMU="
+        timestamp:
+          type: integer
+          format: int64
+          example: 1711013388
+        payload:
+          type: string
+          example: "te6cckEBAQEACAAADDAuanNvbuTiyMU="
+
+    JWKSDTO:
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            properties:
+              kty:
+                type: string
+                example: "RSA"
+              use:
+                type: string
+                example: "sig"
+              kid:
+                type: string
+                example: "1"
+              n:
+                type: string
+                example: "0vx7agoebGcQSuuPiLJXZptN9nndrQmbP..."
+              e:
+                type: string
+                example: "AQAB"
 
   securitySchemes:
     api_key:
