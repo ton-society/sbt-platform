@@ -2035,56 +2035,8 @@ components:
           type: integer
           format: int64
           example: 106
-        additional_info:
-          type: string
-          example: "Taipei, Taiwan"
-        description:
-          type: string
-          example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN.\n**$2,000,000** in prizes and 13 IRL Bootcamp events — this is The Open League Summer 🔥"
-        end_date:
-          type: string
-          example: "2025-12-31"
-        join_button:
-          $ref: '#/components/schemas/JoinButtonAttributes'
-        link:
-          type: string
-          example: "https://id.ton.org/open-league-summer-taipei-bootcamp"
-        public_path:
-          type: string
-          example: "open-league-summer-taipei-bootcamp"
-        publishedAt:
-          type: string
-          format: date-time
-          example: "2024-12-16T00:00:00Z"
-        rewards:
-          $ref: '#/components/schemas/RewardsAttributes'
-        start_date:
-          type: string
-          example: "2024-12-16"
-        subtitle:
-          type: string
-          example: "$2,000,000 in prizes and 13 IRL Bootcamps!"
-        title:
-          type: string
-          example: "Open League Summer: Taipei Bootcamp"
-        hub_id:
-          type: integer
-          format: int64
-          example: 1
-        is_published:
-          type: boolean
-          example: true
-        is_active:
-          type: boolean
-          example: true
-        created_at:
-          type: string
-          format: date-time
-          example: "2024-12-16T00:00:00Z"
-        updated_at:
-          type: string
-          format: date-time
-          example: "2024-12-16T00:00:00Z"
+        attributes:
+          $ref: '#/components/schemas/StrapiActivityAttributes'
 
     GetActivityCollectionAddressesDTO:
       type: object
@@ -2228,6 +2180,567 @@ components:
               e:
                 type: string
                 example: "AQAB"
+
+    # Strapi Activity Attributes
+    StrapiActivityAttributes:
+      type: object
+      properties:
+        activity_group:
+          $ref: '#/components/schemas/StrapiRelationDataActivityGroup'
+        additional_info:
+          type: string
+          example: "Taipei, Taiwan"
+        badge_receival_button:
+          $ref: '#/components/schemas/StrapiBadgeReceivalButtonAttributes'
+        claim_config:
+          $ref: '#/components/schemas/StrapiClaimConfigAttributes'
+        components:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        description:
+          type: string
+          example: "**Meet Open League Summer Bootcamp in Taipei!**\nPITCH. BUILD. GROW. WIN."
+        end_date:
+          type: string
+          example: "2025-12-31"
+        is_whitelist:
+          type: boolean
+          example: false
+        join_button:
+          $ref: '#/components/schemas/StrapiJoinButtonAttributes'
+        leaderboards:
+          $ref: '#/components/schemas/StrapiRelationListLeaderboard'
+        link:
+          type: string
+          example: "https://id.ton.org/open-league-summer-taipei-bootcamp"
+        organizer:
+          $ref: '#/components/schemas/StrapiRelationDataOrganizer'
+        public_path:
+          type: string
+          example: "open-league-summer-taipei-bootcamp"
+        publishedAt:
+          type: string
+          format: date-time
+          example: "2024-12-16T00:00:00Z"
+        rewards:
+          $ref: '#/components/schemas/StrapiRewardsAttributes'
+        society_hub:
+          $ref: '#/components/schemas/StrapiRelationDataSocietyHub'
+        start_date:
+          type: string
+          example: "2024-12-16"
+        subtitle:
+          type: string
+          example: "$2,000,000 in prizes and 13 IRL Bootcamps!"
+        title:
+          type: string
+          example: "Open League Summer: Taipei Bootcamp"
+        xp_amount:
+          type: integer
+          example: 100
+
+    StrapiActivityGroupAttributes:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Events"
+        rank:
+          type: integer
+          example: 1
+        slug:
+          type: string
+          example: "events"
+
+    StrapiAttributeJson:
+      type: object
+      properties:
+        trait_type:
+          type: string
+          example: "Organizer"
+        value:
+          type: string
+          example: "TON Society Asia"
+
+    StrapiBadgeReceivalButtonAttributes:
+      type: object
+      properties:
+        text:
+          type: string
+          example: "Claim Badge"
+        url:
+          type: string
+          example: "https://id.ton.org/claim/badge/123"
+
+    StrapiBasicButton:
+      type: object
+      properties:
+        href:
+          type: string
+          example: "https://id.ton.org/activity/123"
+        text:
+          type: string
+          example: "Join Activity"
+
+    StrapiClaimConfigAttributes:
+      type: object
+      properties:
+        country_codes:
+          type: array
+          items:
+            type: string
+          example: ["FR", "KY"]
+        is_chainalysis_wallet_check_enabled:
+          type: boolean
+          example: true
+        is_trm_wallet_check_enabled:
+          type: boolean
+          example: true
+        skip_allowlist:
+          type: boolean
+          example: false
+        staking_rewards:
+          $ref: '#/components/schemas/StrapiStakingRewardsAttributes'
+
+    StrapiStakingRewardsAttributes:
+      type: object
+      properties:
+        jetton_contract_address:
+          type: string
+          example: "EQD0vdSA_NedR9uvnh89VjS1xYF_EohzG00LWrU7ORqT5iQ"
+        minimum_balance:
+          type: integer
+          example: 1000000000
+
+    StrapiCollectionAttributes:
+      type: object
+      properties:
+        cover:
+          $ref: '#/components/schemas/StrapiFileAttributes'
+        description:
+          type: string
+          example: "Open League Summer is a global hackathon for developers"
+        image:
+          $ref: '#/components/schemas/StrapiFileAttributes'
+        item_description:
+          type: string
+          example: "Reward for participation"
+        item_image:
+          $ref: '#/components/schemas/StrapiFileAttributes'
+        item_metadata:
+          $ref: '#/components/schemas/StrapiItemMetadata'
+        item_title:
+          type: string
+          example: "Open League Summer: Taipei Bootcamp"
+        item_video:
+          $ref: '#/components/schemas/StrapiOptionalFileAttributes'
+        metadata:
+          $ref: '#/components/schemas/StrapiCollectionMetadata'
+        title:
+          type: string
+          example: "Open League Summer: Taipei Bootcamp"
+
+    StrapiCollectionMetadata:
+      type: object
+      properties:
+        cover_image:
+          type: string
+          example: "https://storage.googleapis.com/tonsociety/cover.png"
+        description:
+          type: string
+          example: "Open League Summer collection"
+        image:
+          type: string
+          example: "https://storage.googleapis.com/tonsociety/image.png"
+        name:
+          type: string
+          example: "Open League Summer"
+        social_links:
+          type: array
+          items:
+            type: string
+          example: ["https://t.me/tonsociety", "https://twitter.com/tonsociety"]
+
+    StrapiDescription:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        image:
+          $ref: '#/components/schemas/StrapiMedia'
+        link:
+          type: string
+          example: "https://id.ton.org/activity/123"
+        text:
+          type: string
+          example: "Join the Open League Summer hackathon"
+        title:
+          type: string
+          example: "Open League Summer"
+
+    StrapiFileAttributes:
+      type: object
+      properties:
+        url:
+          type: string
+          example: "https://storage.googleapis.com/tonsociety/image.png"
+
+    StrapiItemMetadata:
+      type: object
+      properties:
+        activity_type:
+          type: string
+          example: "Hackathon"
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrapiAttributeJson'
+        buttons:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrapiItemMetadataButton'
+        content_type:
+          type: string
+          example: "video/mp4"
+        content_url:
+          type: string
+          example: "https://storage.googleapis.com/tonsociety/video.mp4"
+        description:
+          type: string
+          example: "Reward for participation"
+        end_date_iso:
+          type: string
+          example: "2025-12-31"
+        image:
+          type: string
+          example: "https://storage.googleapis.com/tonsociety/image.png"
+        name:
+          type: string
+          example: "Open League Summer: Taipei Bootcamp"
+        organizer:
+          type: string
+          example: "TON Society Asia"
+        original_activity_url:
+          type: string
+          example: "https://lu.ma/9ovl6qeq"
+        place:
+          $ref: '#/components/schemas/StrapiPlace'
+        score:
+          type: integer
+          example: 100
+        start_date_iso:
+          type: string
+          example: "2024-12-16"
+        user_data:
+          type: string
+          example: "John Doe"
+        xp_amount:
+          type: integer
+          example: 50
+
+    StrapiItemMetadataButton:
+      type: object
+      properties:
+        label:
+          type: string
+          example: "View on TON Society"
+        uri:
+          type: string
+          example: "https://id.ton.org/welcome"
+
+    StrapiJoinButtonAttributes:
+      type: object
+      properties:
+        link:
+          type: string
+          example: "https://lu.ma/3mx6a7l7"
+        title:
+          type: string
+          example: "Event details"
+
+    StrapiLeaderboardAttributes:
+      type: object
+      properties:
+        activities:
+          $ref: '#/components/schemas/StrapiIdRelationList'
+        api_name:
+          type: string
+          example: "open_league_summer"
+        connected_activity_ids:
+          type: array
+          items:
+            type: integer
+          example: [123, 124, 125]
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-12-16T00:00:00Z"
+        description:
+          $ref: '#/components/schemas/StrapiDescription'
+        disconnected_activity_ids:
+          type: array
+          items:
+            type: integer
+          example: [126, 127]
+        end_date:
+          type: string
+          example: "2025-12-31"
+        icon:
+          $ref: '#/components/schemas/StrapiMedia'
+        is_referrals_enabled:
+          type: boolean
+          example: true
+        main_activity:
+          $ref: '#/components/schemas/StrapiIdRelationData'
+        name:
+          type: string
+          example: "Open League Summer Leaderboard"
+        published_at:
+          type: string
+          format: date-time
+          example: "2024-12-16T00:00:00Z"
+        rank:
+          type: integer
+          example: 1
+        slug:
+          type: string
+          example: "open-league-summer"
+        start_date:
+          type: string
+          example: "2024-12-16"
+        telegram_notification:
+          $ref: '#/components/schemas/StrapiTelegramNotification'
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-12-16T00:00:00Z"
+
+    StrapiOptionalFileAttributes:
+      type: object
+      properties:
+        file:
+          $ref: '#/components/schemas/StrapiFileAttributes'
+        present:
+          type: boolean
+          example: true
+
+    StrapiOrganizerAttributes:
+      type: object
+      properties:
+        api_key:
+          type: string
+          example: "sk_test_123456789"
+        api_rate_limit:
+          type: integer
+          example: 1000
+        name:
+          type: string
+          example: "TON Society Asia"
+
+    StrapiPlace:
+      type: object
+      properties:
+        country_code_iso:
+          type: string
+          example: "HK"
+        place_coordinates_osm:
+          type: string
+          example: "22.2793278,114.1628131"
+        type:
+          type: string
+          example: "Offline"
+        venue_name:
+          type: string
+          example: "Congress Center"
+
+    StrapiRewardsAttributes:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/StrapiCollectionAttributes'
+        collection_address:
+          type: string
+          example: "EQBMKz_q9PNYh25t9LneI0lVI5zEab07Fzn_Z8MBtgEd6l7L"
+        hub:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+        mint_type:
+          type: string
+          example: "hub_based"
+
+    StrapiSocietyHubAttributes:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Global"
+        url:
+          type: string
+          example: "https://t.me/tonsociety_chat"
+
+    # Strapi Relation Schemas
+    StrapiIdRelationData:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+        id:
+          type: integer
+          example: 1
+
+    StrapiIdRelationList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+
+    StrapiMedia:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            attributes:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: "https://storage.googleapis.com/tonsociety/image.png"
+            id:
+              type: integer
+              example: 1
+
+    StrapiRelationDataActivityGroup:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            attributes:
+              $ref: '#/components/schemas/StrapiActivityGroupAttributes'
+            id:
+              type: integer
+              example: 1
+        id:
+          type: integer
+          example: 1
+
+    StrapiRelationDataOrganizer:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            attributes:
+              $ref: '#/components/schemas/StrapiOrganizerAttributes'
+            id:
+              type: integer
+              example: 1
+        id:
+          type: integer
+          example: 1
+
+    StrapiRelationDataSocietyHub:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            attributes:
+              $ref: '#/components/schemas/StrapiSocietyHubAttributes'
+            id:
+              type: integer
+              example: 1
+        id:
+          type: integer
+          example: 1
+
+    StrapiRelationListLeaderboard:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              attributes:
+                $ref: '#/components/schemas/StrapiLeaderboardAttributes'
+              id:
+                type: integer
+                example: 1
+
+    StrapiTelegramNotification:
+      type: object
+      properties:
+        button:
+          $ref: '#/components/schemas/StrapiBasicButton'
+        image:
+          $ref: '#/components/schemas/StrapiRelationDataFile'
+        text:
+          type: string
+          example: "Join the Open League Summer hackathon!"
+
+    StrapiRelationDataFile:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            attributes:
+              $ref: '#/components/schemas/StrapiFileAttributes'
+            id:
+              type: integer
+              example: 1
+        id:
+          type: integer
+          example: 1
+
+    # TON Service Schemas
+    TONServiceDeviceInfo:
+      type: object
+      properties:
+        appName:
+          type: string
+          example: "TON Wallet"
+        appVersion:
+          type: string
+          example: "4.0.0"
+        features:
+          type: array
+          items: {}
+          example: ["tonconnect", "tonapi"]
+        maxProtocolVersion:
+          type: integer
+          example: 2
+        platform:
+          type: string
+          example: "ios"
+
+    TONServiceDomain:
+      type: object
+      properties:
+        lengthBytes:
+          type: integer
+          example: 29
+        value:
+          type: string
+          example: "id.ton.org"
 
   securitySchemes:
     api_key:
